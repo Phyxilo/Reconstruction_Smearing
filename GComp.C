@@ -25,9 +25,9 @@ TH1F *eTYMC0Hist = new TH1F("eTYMCHist","Slope Y Histogram ",50,-0.5,0.5);
 TH1F *eTXMC1Hist = new TH1F("eTXMCHist","Slope X Histogram ",50,-0.5,0.5);
 TH1F *eTYMC1Hist = new TH1F("eTYMCHist","Slope Y Histogram ",50,-0.5,0.5);
 
-TH1F *eT2DataHist = new TH1F("eTXDataHist","Space Angle Histogram ",50,0,1);
-TH1F *eT2MC0Hist = new TH1F("eTXDataHist","Space Angle Histogram ",50,0,1);
-TH1F *eT2MC1Hist = new TH1F("eTXDataHist","Space Angle Histogram ",50,0,1);
+TH1F *eT2DataHist = new TH1F("eT2DataHist","Space Angle Histogram ",50,0,1);
+TH1F *eT2MC0Hist = new TH1F("eT2MCHist","Space Angle Histogram ",50,0,1);
+TH1F *eT2MC1Hist = new TH1F("eT2MCHist","Space Angle Histogram ",50,0,1);
 
 void GComp()
 {

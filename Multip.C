@@ -33,6 +33,7 @@ void Multip()
 
   TH1F *MCMultHist = new TH1F("MCMultiplicity","Multiplicity Histogram ",80,0,80);
   TH1F *DataMultHist = new TH1F("DataMultiplicity","Multiplicity Histogram ",80,0,80);
+  TH1F *TXHist = new TH1F("TX","Multiplicity Histogram ",50,-0.5,0.5);
 
   TTree *MCTree = (TTree*)monteCarlo->Get("tracks");
   TTree *dataTree = (TTree*)data->Get("VTX");
@@ -40,6 +41,7 @@ void Multip()
   TLeaf *MCPlateID = MCTree->GetLeaf("t.ePID");
   TLeaf *MCMult = MCTree->GetLeaf("t.eMCTrack");
   TLeaf *MCeID = MCTree->GetLeaf("t.eMCEvt");
+  TLeaf *MCTX = MCTree->GetLeaf("t.eTX");
 
   TLeaf *DataeID = dataTree->GetLeaf("n_1ry_trk");
 
@@ -64,23 +66,9 @@ void Multip()
     currentEID = MCeID->GetValue();
     eIDListFull.push_back(currentEID);
 
-    if (MCPlateID->GetValue() >= 1 && find(eIDList.begin(), eIDList.end(), currentEID) == eIDList.end())
+    if (find(eIDList.begin(), eIDList.end(), currentEID) == eIDList.end())
     {
-      //MCMultHist->Fill(MCMult->GetValue());
-      /*
-      for (int j = 0; j < eSize; j++)
-      {
-        MCTree->GetEntry(j);
-        secondEID = MCeID->GetValue();
 
-        if (currentEID == secondEID) { multNum++; }
-      }
-      */
-      //cout << "EventID: " << currentEID << endl;
-
-      //cout << "EventID: " << currentEID << " = " << multNum << endl;
-      //MCMultHist->Fill(multNum);
-      //multNum = -1;
       eIDList.push_back(currentEID);
     }
     
@@ -91,10 +79,12 @@ void Multip()
   for (int i = 0; i < eIDSize; i++)
   {
     multNum = count(eIDListFull.begin(), eIDListFull.end(), eIDList[i]);
+    MCTree->GetEntry(i);
 
-    if (multNum > 1)
+    if (multNum > 2 && MCPlateID->GetValue() >= 1)
     {
       MCMultHist->Fill(multNum-1);
+      TXHist->Fill(MCTX->GetValue());
       cout << "Event: " << i << "/" << eIDSize << endl;
     }
 
@@ -114,4 +104,7 @@ void Multip()
   legendTX->Draw();
   
   Canvas->Print ("multHist.pdf", "pdf");
+
+  TXHist->Draw();
+  Canvas->Print ("TX.pdf", "pdf");
 }
