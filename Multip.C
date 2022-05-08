@@ -81,7 +81,7 @@ void Multip()
     multNum = count(eIDListFull.begin(), eIDListFull.end(), eIDList[i]);
     MCTree->GetEntry(i);
 
-    if (multNum > 2 && MCPlateID->GetValue() >= 1)
+    if (multNum > 4 && MCPlateID->GetValue() >= 1)
     {
       MCMultHist->Fill(multNum-1);
       TXHist->Fill(MCTX->GetValue());
@@ -93,6 +93,7 @@ void Multip()
 
   MCMultHist->Scale(DataMultHist->Integral()/MCMultHist->Integral());
 
+  MCMultHist->GetYaxis()->SetRangeUser(0, 4500);
   MCMultHist->Draw("HIST");
   DataMultHist->Draw("SAME");
   DataMultHist->SetLineColor(kRed);
