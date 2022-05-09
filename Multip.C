@@ -99,7 +99,7 @@ void Multip()
     multNum = count(eIDListFull.begin(), eIDListFull.end(), eIDList[i]);
     MCTree->GetEntry(i);
 
-    if (/*multNum > 2 &&*/MCParentID->GetValue() == 1 && MCPlateID->GetValue() >= 1)
+    if (multNum > 2 && MCParentID->GetValue() == 1 && MCPlateID->GetValue() >= 1)
     {
       //MCMultHist->Fill(multNum-1);
       mlt = multNum-1; MltTree->Fill();

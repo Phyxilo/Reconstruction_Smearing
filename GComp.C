@@ -50,7 +50,9 @@ void GComp()
   //sprintf(MC0Name, "/home/phyxilo/Downloads/pl001_030/linked_tracks.root");
   sprintf(MC1Name, "/home/phyxilo/Downloads/fedraOut/Out/finalCut.root");
   //sprintf(MC2Name, "/home/phyxilo/Downloads/fedraOut/OutTrack/finalCut.root");
-  sprintf(TrueMCName, "TrueMC/trueMC.root");
+  //sprintf(TrueMCName, "/home/phyxilo/root/macros/Smearing/MultCut.root");
+  sprintf(TrueMCName, "/home/phyxilo/root/macros/Smearing/MultCut.root");
+  //sprintf(TrueMCName, "TrueMC/trueMC.root");
   sprintf(dataName, "/home/phyxilo/Downloads/dataFile/data.root");
 
   sprintf(outName, "histogram.pdf");
@@ -190,7 +192,8 @@ void HistDraw()
   eIDListMC.erase(unique(eIDListMC.begin(), eIDListMC.end()), eIDListMC.end());
 
   eventSizeMC = eIDListMC.size();
-  eventSizeTrueMC = 10000;
+  eventSizeTrueMC = 1148;
+  //eventSizeTrueMC = 10000;
   eventSizeData = treeDataVtx->GetEntriesFast();
 
 }
@@ -241,9 +244,9 @@ void HistFormatMulti(vector<TH1F*> HistArr)
   HistArr[2]->SetLineColor(kGreen); HistArr[2]->Draw("SAME HIST");
   //HistArr[3]->SetLineColor(kBlack); HistArr[3]->SetLineStyle(kSolid); HistArr[3]->Draw("SAME HIST");
 
-  auto legendTX = new TLegend(0.1, 0.8, 0.32, 0.9);
+  auto legendTX = new TLegend(0.1, 0.8, 0.35, 0.95);
   legendTX->SetHeader("Histogram Legend","C");
-  legendTX->AddEntry(HistArr[2],"True Monte Carlo","f");
+  legendTX->AddEntry(HistArr[2],"Monte Carlo (Final Cut)","f");
   //legendTX->AddEntry(HistArr[2],"Monte Carlo 2","f");
   legendTX->AddEntry(HistArr[1],"Monte Carlo","f");
   legendTX->AddEntry(HistArr[0],"Data","f");
