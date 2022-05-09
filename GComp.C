@@ -36,14 +36,20 @@ TH1F *eT2MCTrueHist = new TH1F("eT2MCHist","Space Angle Histogram ",50,0,1);
 
 TFile *data, *monteCarlo0, *monteCarlo1, *monteCarloTrue, *monteCarlo2;
 
+vector<int> eIDListMC;
+vector<int> eIDListTrueMC;
+vector<int> eIDListData;
+
+int eventSizeMC, eventSizeTrueMC, eventSizeData;
+
 void GComp()
 {
   char dataName[64], MC0Name[64], MC1Name[64], TrueMCName[64], MC2Name[64];
   char outName[64], outNameBegin[64], outNameEnd[64];
 
-  sprintf(MC0Name, "/home/phyxilo/Downloads/pl001_030/linked_tracks.root");
+  //sprintf(MC0Name, "/home/phyxilo/Downloads/pl001_030/linked_tracks.root");
   sprintf(MC1Name, "/home/phyxilo/Downloads/fedraOut/Out/finalCut.root");
-  sprintf(MC2Name, "/home/phyxilo/Downloads/fedraOut/OutTrack/finalCut.root");
+  //sprintf(MC2Name, "/home/phyxilo/Downloads/fedraOut/OutTrack/finalCut.root");
   sprintf(TrueMCName, "TrueMC/trueMC.root");
   sprintf(dataName, "/home/phyxilo/Downloads/dataFile/data.root");
 
@@ -55,48 +61,50 @@ void GComp()
   Canvas->SetCanvasSize(192*6, 108*6);
 
   data = TFile::Open(dataName);
-  monteCarlo0 = TFile::Open(MC0Name);
+  //monteCarlo0 = TFile::Open(MC0Name);
   monteCarlo1 = TFile::Open(MC1Name);
-  monteCarlo2 = TFile::Open(MC2Name);
+  //monteCarlo2 = TFile::Open(MC2Name);
   monteCarloTrue = TFile::Open(TrueMCName);
 
   HistDraw();
 
   vector<TH1F*> histListTX, histListTY, histListT2;
-  histListTX.push_back(eTXDataHist); histListTX.push_back(eTXMC1Hist); histListTX.push_back(eTXMC2Hist); histListTX.push_back(eTXMCTrueHist);
-  histListTY.push_back(eTYDataHist); histListTY.push_back(eTYMC1Hist); histListTY.push_back(eTYMC2Hist); histListTY.push_back(eTYMCTrueHist);
-  histListT2.push_back(eT2DataHist); histListT2.push_back(eT2MC1Hist); histListT2.push_back(eT2MC2Hist); histListT2.push_back(eT2MCTrueHist);
+  histListTX.push_back(eTXDataHist); histListTX.push_back(eTXMC1Hist); histListTX.push_back(eTXMCTrueHist);
+  histListTY.push_back(eTYDataHist); histListTY.push_back(eTYMC1Hist); histListTY.push_back(eTYMCTrueHist);
+  histListT2.push_back(eT2DataHist); histListT2.push_back(eT2MC1Hist); histListT2.push_back(eT2MCTrueHist);
 
   Canvas->Print( outNameBegin,"pdf");
 
-  /*
+  
   HistFormatMulti(histListTX); Canvas->Print( outName,"pdf");
   HistFormatMulti(histListTY); Canvas->Print( outName,"pdf");
-  HistFormatMulti(histListT2); Canvas->Print( outName,"pdf");
-  */
+  HistFormatMulti(histListT2); Canvas->Print( outName,"pdf"); 
 
+  /*
   HistFormat(eTXDataHist, eTXMC1Hist); Canvas->Print( outName,"pdf");
   HistFormat(eTYDataHist, eTYMC1Hist); Canvas->Print( outName,"pdf");
   HistFormat(eT2DataHist, eT2MC1Hist); Canvas->Print( outName,"pdf");
-  
+  */
+
   Canvas->Print( outNameEnd,"pdf");
 }
 void HistDraw()
 {
   TTree *treeData = (TTree*)data->Get("TRK");
-  TTree *treeMC0 = (TTree*)monteCarlo0->Get("tracks");
+  TTree *treeDataVtx = (TTree*)data->Get("VTX");
+  //TTree *treeMC0 = (TTree*)monteCarlo0->Get("tracks");
   TTree *treeMC1 = (TTree*)monteCarlo1->Get("tracks");
-  TTree *treeMC2 = (TTree*)monteCarlo2->Get("tracks");
+  //TTree *treeMC2 = (TTree*)monteCarlo2->Get("tracks");
   TTree *treeMCTrue = (TTree*)monteCarloTrue->Get("Slp");
 
   TLeaf *eTXData = treeData->GetLeaf("tx"); TLeaf *eTYData = treeData->GetLeaf("ty");
-  TLeaf *eTXMC0 = treeMC0->GetLeaf("t.eTX"); TLeaf *eTYMC0 = treeMC0->GetLeaf("t.eTY");
-  TLeaf *eTXMC1 = treeMC1->GetLeaf("t.eTX"); TLeaf *eTYMC1 = treeMC1->GetLeaf("t.eTY");
-  TLeaf *eTXMC2 = treeMC2->GetLeaf("t.eTX"); TLeaf *eTYMC2 = treeMC2->GetLeaf("t.eTY");
+  //TLeaf *eTXMC0 = treeMC0->GetLeaf("t.eTX"); TLeaf *eTYMC0 = treeMC0->GetLeaf("t.eTY");
+  TLeaf *eTXMC1 = treeMC1->GetLeaf("t.eTX"); TLeaf *eTYMC1 = treeMC1->GetLeaf("t.eTY"); TLeaf *eIDMC1 = treeMC1->GetLeaf("t.eMCEvt");
+  //TLeaf *eTXMC2 = treeMC2->GetLeaf("t.eTX"); TLeaf *eTYMC2 = treeMC2->GetLeaf("t.eTY"); 
   TLeaf *eTXMCTrue = treeMCTrue->GetLeaf("SlpTX"); TLeaf *eTYMCTrue = treeMCTrue->GetLeaf("SlpTY");
   TLeaf *eT2MCTrue = treeMCTrue->GetLeaf("SlpT2");
  
-  TLeaf *PlateIDMC0 = treeMC0->GetLeaf("t.ePID"); TLeaf *PlateIDMC1 = treeMC1->GetLeaf("t.ePID"); TLeaf *PlateIDMC2 = treeMC2->GetLeaf("t.ePID");
+  /*TLeaf *PlateIDMC0 = treeMC0->GetLeaf("t.ePID");*/ TLeaf *PlateIDMC1 = treeMC1->GetLeaf("t.ePID"); /*TLeaf *PlateIDMC2 = treeMC2->GetLeaf("t.ePID");*/
 
   TLeaf *beamAngleX = treeData->GetLeaf("txpeak"); TLeaf *beamAngleY = treeData->GetLeaf("typeak");
 
@@ -142,9 +150,11 @@ void HistDraw()
       eTXMC1Hist->Fill(bfXMC1);
       eTYMC1Hist->Fill(bfYMC1);
       eT2MC1Hist->Fill(sqrt(bfXMC1*bfXMC1 + bfYMC1*bfYMC1));
+
+      eIDListMC.push_back(eIDMC1->GetValue());
     }
   }
-
+  /*
   for (int i = 0; i < treeMC2->GetEntriesFast(); i++)
   {
     treeMC2->GetEntry(i);
@@ -159,7 +169,7 @@ void HistDraw()
       eT2MC2Hist->Fill(sqrt(bfXMC2*bfXMC2 + bfYMC2*bfYMC2));
     }
   }
-
+  */
 
   for (int i = 0; i < treeMCTrue->GetEntriesFast(); i++)
   {
@@ -171,7 +181,18 @@ void HistDraw()
     eTXMCTrueHist->Fill(bfXMCTrue);
     eTYMCTrueHist->Fill(bfYMCTrue);
     eT2MCTrueHist->Fill(sqrt(bfXMCTrue*bfXMCTrue + bfYMCTrue*bfYMCTrue));
+
+    //eIDListTrueMC.push_back()
   }
+
+
+  sort(eIDListMC.begin(), eIDListMC.end());
+  eIDListMC.erase(unique(eIDListMC.begin(), eIDListMC.end()), eIDListMC.end());
+
+  eventSizeMC = eIDListMC.size();
+  eventSizeTrueMC = 10000;
+  eventSizeData = treeDataVtx->GetEntriesFast();
+
 }
 
 void HistFormat(TH1F *Hist0, TH1F *Hist1)
@@ -203,25 +224,28 @@ void HistFormat(TH1F *Hist0, TH1F *Hist1)
 
 void HistFormatMulti(vector<TH1F*> HistArr)
 {
-  HistArr[1]->Scale(HistArr[0]->Integral()/HistArr[1]->Integral());
-  HistArr[2]->Scale(HistArr[0]->Integral()/HistArr[2]->Integral());
-  HistArr[3]->Scale(HistArr[0]->Integral()/HistArr[3]->Integral());
+  //HistArr[1]->Scale(HistArr[0]->Integral()/HistArr[1]->Integral());
+  //HistArr[2]->Scale(HistArr[0]->Integral()/HistArr[2]->Integral());
+  //HistArr[3]->Scale(HistArr[0]->Integral()/HistArr[3]->Integral());
 
   //Hist0->Scale(1./Hist0->Integral());
   //Hist1->Scale(1./Hist1->Integral());
 
+  HistArr[1]->Scale(eventSizeData/eventSizeMC);
+  HistArr[2]->Scale(eventSizeData/eventSizeTrueMC);
+
   HistArr[0]->GetYaxis()->SetRangeUser(0, 180000);
 
-  HistArr[0]->SetLineColor(kRed); HistArr[0]->SetLineStyle(kSolid); HistArr[0]->Draw("HIST"); 
-  HistArr[1]->SetLineColor(kBlue); HistArr[1]->SetLineStyle(kDashed); HistArr[1]->Draw("SAME HIST");
-  HistArr[2]->SetLineColor(kGreen); HistArr[2]->SetLineStyle(kDashed); HistArr[2]->Draw("SAME HIST");
-  HistArr[3]->SetLineColor(kBlack); HistArr[3]->SetLineStyle(kSolid); HistArr[3]->Draw("SAME HIST");
+  HistArr[0]->SetLineColor(kRed); HistArr[0]->Draw("HIST E1"); 
+  HistArr[1]->SetLineColor(kBlue); HistArr[1]->Draw("SAME HIST");
+  HistArr[2]->SetLineColor(kGreen); HistArr[2]->Draw("SAME HIST");
+  //HistArr[3]->SetLineColor(kBlack); HistArr[3]->SetLineStyle(kSolid); HistArr[3]->Draw("SAME HIST");
 
   auto legendTX = new TLegend(0.1, 0.8, 0.32, 0.9);
   legendTX->SetHeader("Histogram Legend","C");
-  legendTX->AddEntry(HistArr[3],"True Monte Carlo","f");
-  legendTX->AddEntry(HistArr[2],"Monte Carlo 2","f");
-  legendTX->AddEntry(HistArr[1],"Monte Carlo 1","f");
+  legendTX->AddEntry(HistArr[2],"True Monte Carlo","f");
+  //legendTX->AddEntry(HistArr[2],"Monte Carlo 2","f");
+  legendTX->AddEntry(HistArr[1],"Monte Carlo","f");
   legendTX->AddEntry(HistArr[0],"Data","f");
   legendTX->Draw();
 }

@@ -53,7 +53,7 @@ void Multip()
   //TTree *dataTree = (TTree*)data->Get("VTX");
 
   TLeaf *MCPlateID = MCTree->GetLeaf("t.ePID");
-  TLeaf *MCMult = MCTree->GetLeaf("t.eMCTrack");
+  TLeaf *MCParentID = MCTree->GetLeaf("t.eMCTrack");
   TLeaf *MCeID = MCTree->GetLeaf("t.eMCEvt");
   TLeaf *MCTX = MCTree->GetLeaf("t.eTX");
   TLeaf *MCTY = MCTree->GetLeaf("t.eTY");
@@ -99,11 +99,11 @@ void Multip()
     multNum = count(eIDListFull.begin(), eIDListFull.end(), eIDList[i]);
     MCTree->GetEntry(i);
 
-    if (multNum > 2 && MCPlateID->GetValue() >= 1)
+    if (/*multNum > 2 &&*/MCParentID->GetValue() == 1 && MCPlateID->GetValue() >= 1)
     {
       //MCMultHist->Fill(multNum-1);
       mlt = multNum-1; MltTree->Fill();
-
+      
       for (int j = 0; j < multNum; j++)
       {
         auto it = find(eIDListFull.begin() + index + 1, eIDListFull.end(), eIDList[i]);
@@ -120,6 +120,7 @@ void Multip()
 
           //TXHist->Fill(MCTX->GetValue());
         }
+        
       }
       index = 0;
 
