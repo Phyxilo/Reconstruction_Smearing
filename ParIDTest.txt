@@ -1,0 +1,72 @@
+------------------ Selected Particle FLUKA ID List ------------------
+Particle 1 = 14, Particle Count =  67600
+Particle 2 = 13, Particle Count =  69015
+Particle 3 = 1, Particle Count =  23167
+Particle 4 = 16, Particle Count =  4561
+Particle 5 = 4, Particle Count =  38519
+Particle 6 = 3, Particle Count =  36337
+Particle 7 = 15, Particle Count =  6117
+Particle 8 = -2, Particle Count =  1068
+Particle 9 = 2, Particle Count =  1524
+Particle 10 = 20, Particle Count =  524
+Particle 11 = 21, Particle Count =  609
+Particle 12 = 46, Particle Count =  73
+Particle 13 = 33, Particle Count =  198
+Particle 14 = 37, Particle Count =  74
+Particle 15 = 31, Particle Count =  198
+Particle 16 = 36, Particle Count =  125
+Particle 17 = 38, Particle Count =  1
+Particle 18 = 11, Particle Count =  7
+Particle 19 = 10, Particle Count =  9
+Particle 20 = 45, Particle Count =  63
+Particle 21 = 51, Particle Count =  30
+Particle 22 = 50, Particle Count =  6
+Particle 23 = 49, Particle Count =  6
+Particle 24 = 57, Particle Count =  9
+Particle 25 = 39, Particle Count =  3
+Particle 26 = 52, Particle Count =  2
+
+------------------ Discarded Particle FLUKA ID List ------------------
+Particle 1 = 14, Particle Count =  118
+Particle 2 = 13, Particle Count =  151
+Particle 3 = 1, Particle Count =  14169
+Particle 4 = 16, Particle Count =  5
+Particle 5 = 2, Particle Count =  2
+Particle 6 = 15, Particle Count =  7
+Particle 7 = 20, Particle Count =  1
+Particle 8 = -2, Particle Count =  5
+Particle 9 = 3, Particle Count =  5
+Particle 10 = 4, Particle Count =  2
+Particle 11 = 33, Particle Count =  1
+
+
+------------------ Selected Particle FLUKA ID List ------------------
+Particle 1 = 14, Particle Count =  67718
+Particle 2 = 13, Particle Count =  69166
+Particle 3 = 1, Particle Count =  23167
+Particle 4 = 16, Particle Count =  4566
+Particle 5 = 4, Particle Count =  38521
+Particle 6 = 3, Particle Count =  36342
+Particle 7 = 2, Particle Count =  1526
+Particle 8 = 15, Particle Count =  6124
+Particle 9 = -2, Particle Count =  1073
+Particle 10 = 20, Particle Count =  525
+Particle 11 = 21, Particle Count =  609
+Particle 12 = 46, Particle Count =  73
+Particle 13 = 33, Particle Count =  199
+Particle 14 = 37, Particle Count =  74
+Particle 15 = 31, Particle Count =  198
+Particle 16 = 36, Particle Count =  125
+Particle 17 = 38, Particle Count =  1
+Particle 18 = 11, Particle Count =  7
+Particle 19 = 10, Particle Count =  9
+Particle 20 = 45, Particle Count =  63
+Particle 21 = 51, Particle Count =  30
+Particle 22 = 50, Particle Count =  6
+Particle 23 = 49, Particle Count =  6
+Particle 24 = 57, Particle Count =  9
+Particle 25 = 39, Particle Count =  3
+Particle 26 = 52, Particle Count =  2
+
+------------------ Discarded Particle FLUKA ID List ------------------
+Particle 1 = 1, Particle Count =  14169

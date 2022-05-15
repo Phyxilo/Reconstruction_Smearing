@@ -23,14 +23,14 @@ void Multip()
   //sprintf(MC1Name, "/home/phyxilo/Downloads/fedraOut/OutTrack/finalCut.root");
   sprintf(MC1Name, "/home/phyxilo/Downloads/fedraOut/Out/finalCut.root");
   //sprintf(MCName, "/home/phyxilo/Downloads/pl001_030/linked_tracks.root");
-  //sprintf(dataName, "/home/phyxilo/Downloads/dataFile/data.root");
-  /*
+  sprintf(dataName, "/home/phyxilo/Downloads/dataFile/data.root");
+  
   TCanvas *Canvas= new TCanvas("Canvas","Histogram Canvas",20,20,1920,1080);
   Canvas->SetWindowSize(1920, 1080);
   Canvas->SetCanvasSize(192*6, 108*6);
-  */
+  
   TFile *monteCarlo = TFile::Open(MC1Name);
-  //TFile *data = TFile::Open(dataName);
+  TFile *data = TFile::Open(dataName);
 
   TFile MCFile("MultCut.root","recreate");
 
@@ -45,12 +45,12 @@ void Multip()
   TBranch *eT2Br = SlpTree->Branch("SlpT2", &t2, "SlpT2/F");
   TBranch *eMult = MltTree->Branch("Mult", &mlt, "Mult/I");
 
-  //TH1F *MCMultHist = new TH1F("MCMultiplicity","Multiplicity Histogram ",80,0,80);
-  //TH1F *DataMultHist = new TH1F("DataMultiplicity","Multiplicity Histogram ",80,0,80);
-  //TH1F *TXHist = new TH1F("TX","Multiplicity Histogram ",50,-0.5,0.5);
+  TH1F *MCMultHist = new TH1F("MCMultiplicity","Multiplicity Histogram ",80,0,80);
+  TH1F *DataMultHist = new TH1F("DataMultiplicity","Multiplicity Histogram ",80,0,80);
+  TH1F *TXHist = new TH1F("TX","Multiplicity Histogram ",50,-0.5,0.5);
 
   TTree *MCTree = (TTree*)monteCarlo->Get("tracks");
-  //TTree *dataTree = (TTree*)data->Get("VTX");
+  TTree *dataTree = (TTree*)data->Get("VTX");
 
   TLeaf *MCPlateID = MCTree->GetLeaf("t.ePID");
   TLeaf *MCParentID = MCTree->GetLeaf("t.eMCTrack");
@@ -58,7 +58,7 @@ void Multip()
   TLeaf *MCTX = MCTree->GetLeaf("t.eTX");
   TLeaf *MCTY = MCTree->GetLeaf("t.eTY");
 
-  //TLeaf *DataeID = dataTree->GetLeaf("n_1ry_trk");
+  TLeaf *DataeID = dataTree->GetLeaf("n_1ry_trk");
 
   int currentEID = 0;
   int secondEID = 0;
@@ -66,15 +66,15 @@ void Multip()
   int eSize = MCTree->GetEntriesFast();
 
   int currentDataEID = 0;
-  /*
+  
   for (int i = 0; i < dataTree->GetEntriesFast(); i++)
   {
     dataTree->GetEntry(i);
 
     currentDataEID = DataeID->GetValue();
-    //DataMultHist->Fill(currentDataEID);
+    DataMultHist->Fill(currentDataEID);
   }
-  */
+  
   for (int i = 0; i < eSize; i++)
   {
     MCTree->GetEntry(i);
@@ -101,7 +101,7 @@ void Multip()
 
     if (multNum > 2 && MCParentID->GetValue() == 1 && MCPlateID->GetValue() >= 1)
     {
-      //MCMultHist->Fill(multNum-1);
+      MCMultHist->Fill(multNum-1);
       mlt = multNum-1; MltTree->Fill();
       
       for (int j = 0; j < multNum; j++)
@@ -146,7 +146,7 @@ void Multip()
 
   MCFile.Close();
 
-  /*
+  
   MCMultHist->Scale(DataMultHist->Integral()/MCMultHist->Integral());
 
   MCMultHist->GetYaxis()->SetRangeUser(0, 4500);
@@ -161,7 +161,7 @@ void Multip()
   legendTX->Draw();
   
   Canvas->Print ("multHist.pdf", "pdf");
-
+  /*
   TXHist->Draw();
   Canvas->Print ("TX.pdf", "pdf");
   */
