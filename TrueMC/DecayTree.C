@@ -34,15 +34,19 @@ void DecayTree::Loop()
    TH1F *eTYHist = new TH1F("eTXDataHist","Slope X Histogram ",50,-0.5,0.5);
    TH1F *eT2Hist = new TH1F("eT2MCHist","Space Angle Histogram ",50,0,1);
 
-   float tX, tY, t2;
+   float tX, tY, t2, event, flag, parID, vtxID;
 
    TFile MCFile("trueMC.root","recreate");
 
-   TTree *SlpTree = new TTree("Slp","Slope");
+   TTree *TrkTree = new TTree("TRK","Track");
 
-   TBranch *eTXBr = SlpTree->Branch("SlpTX", &tX, "SlpTX/F");
-   TBranch *eTYBr = SlpTree->Branch("SlpTY", &tY, "SlpTY/F");
-   TBranch *eT2Br = SlpTree->Branch("SlpT2", &t2, "SlpT2/F");
+   TBranch *eTXBr = TrkTree->Branch("SlpTX", &tX, "SlpTX/F");
+   TBranch *eTYBr = TrkTree->Branch("SlpTY", &tY, "SlpTY/F");
+   TBranch *eT2Br = TrkTree->Branch("SlpT2", &t2, "SlpT2/F");
+   TBranch *Evt = TrkTree->Branch("Event", &event, "Event/F");
+   TBranch *Flg = TrkTree->Branch("Flag", &flag, "Flag/F");
+   TBranch *PrID = TrkTree->Branch("ParID", &parID, "ParID/F");
+   TBranch *VtxID = TrkTree->Branch("VertexID", &vtxID, "VertexID/F");
 
    float eTX, eTY, eT2;
 
@@ -64,14 +68,21 @@ void DecayTree::Loop()
       eTY = IntInfo[1]/IntInfo[2];
       eT2 = sqrt(eTX*eTX+eTY*eTY);
 
-      if (eTX < 0.4 && eTX > -0.4) {eTXHist->Fill(eTX); tX = eTX; SlpTree->Fill();}
+      if ((eTX < 0.4 && eTX > -0.4) && (eTY < 0.4 && eTY > -0.4)) 
+      {
+         eTXHist->Fill(eTX); tX = eTX;
+         eTYHist->Fill(eTY); tY = eTY;
+         eT2Hist->Fill(eT2); t2 = eT2;
 
-      if (eTY < 0.4 && eTY > -0.4) {eTYHist->Fill(eTY); tY = eTY; SlpTree->Fill();}
-      
-      if ((eTX < 0.4 && eTX > -0.4) && (eTY < 0.4 && eTY > -0.4)) {eT2Hist->Fill(eT2); t2 = eT2; SlpTree->Fill();}
+         event = Event;
+         flag = Flag;
+         parID = ParId;
+         vtxID = VertexId;
 
+         TrkTree->Fill();
+      }
    }
-   SlpTree->Write();
+   TrkTree->Write();
 
    //eT2Hist->Draw();
 
