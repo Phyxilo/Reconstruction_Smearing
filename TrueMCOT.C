@@ -121,7 +121,7 @@ void TrueMCOT()
             }
           }
 
-          if (/*refFlag == 222*/ refParID = 1)
+          if (refFlag == 222 /*refParID == 1*/)
           {
             tX = refTrTX; tY = refTrTY; t2 = refTrT2;
             ev = refIDEvent; prID = refParID;

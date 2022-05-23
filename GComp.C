@@ -51,9 +51,10 @@ void GComp()
   sprintf(MC1Name, "/home/phyxilo/Downloads/fedraOut/Out/finalCut.root");
   //sprintf(MC2Name, "/home/phyxilo/Downloads/fedraOut/OutTrack/finalCut.root");
   //sprintf(TrueMCName, "/home/phyxilo/root/macros/Smearing/MultCut.root");
-  sprintf(TrueMCName, "/home/phyxilo/root/macros/Smearing/MultCut.root");
+  //sprintf(TrueMCName, "/home/phyxilo/root/macros/Smearing/MultCut.root");
   //sprintf(TrueMCName, "TrueMC/trueMC.root");
   sprintf(dataName, "/home/phyxilo/Downloads/dataFile/data.root");
+  sprintf(TrueMCName, "TrueMC/trueMC.root");
 
   sprintf(outName, "histogram.pdf");
   sprintf(outNameBegin, "%s[", outName);
@@ -97,7 +98,7 @@ void HistDraw()
   //TTree *treeMC0 = (TTree*)monteCarlo0->Get("tracks");
   TTree *treeMC1 = (TTree*)monteCarlo1->Get("tracks");
   //TTree *treeMC2 = (TTree*)monteCarlo2->Get("tracks");
-  TTree *treeMCTrue = (TTree*)monteCarloTrue->Get("Slp");
+  TTree *treeMCTrue = (TTree*)monteCarloTrue->Get("TRK");
 
   TLeaf *eTXData = treeData->GetLeaf("tx"); TLeaf *eTYData = treeData->GetLeaf("ty");
   //TLeaf *eTXMC0 = treeMC0->GetLeaf("t.eTX"); TLeaf *eTYMC0 = treeMC0->GetLeaf("t.eTY");
@@ -192,7 +193,7 @@ void HistDraw()
   eIDListMC.erase(unique(eIDListMC.begin(), eIDListMC.end()), eIDListMC.end());
 
   eventSizeMC = eIDListMC.size();
-  eventSizeTrueMC = 1148;
+  eventSizeTrueMC = 2431*2;
   //eventSizeTrueMC = 10000;
   eventSizeData = treeDataVtx->GetEntriesFast();
 
@@ -246,7 +247,7 @@ void HistFormatMulti(vector<TH1F*> HistArr)
 
   auto legendTX = new TLegend(0.1, 0.8, 0.35, 0.95);
   legendTX->SetHeader("Histogram Legend","C");
-  legendTX->AddEntry(HistArr[2],"Monte Carlo (Final Cut)","f");
+  legendTX->AddEntry(HistArr[2],"True Monte Carlo","f");
   //legendTX->AddEntry(HistArr[2],"Monte Carlo 2","f");
   legendTX->AddEntry(HistArr[1],"Monte Carlo","f");
   legendTX->AddEntry(HistArr[0],"Data","f");
