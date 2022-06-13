@@ -13,7 +13,7 @@ vector<int> eIDListFull;
 
 void MultipVTX()
 {
-  TFile *monteCarlo = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/vertexingTrReduced_01.root");
+  TFile *monteCarlo = TFile::Open("/home/phyxilo/root/macros/Smearing/vertexingTrReducedMC_500.root");
 
   float tX, tY, t2;
   int mlt;
@@ -21,7 +21,7 @@ void MultipVTX()
   TTree *MCTree = (TTree*)monteCarlo->Get("TRK");
   TLeaf *MCeID = MCTree->GetLeaf("VertexID");
 
-  TFile outFile("vertexingTrReduced.root","recreate");
+  TFile outFile("vertexingMultipMC_500.root","recreate");
   TTree *TrkTree = new TTree("TRK","Track");
   TTree *VtxTree = new TTree("VTX","Vertex");
   TBranch *mltBr = VtxTree->Branch("Multip", &mlt, "Multip/I");
@@ -46,7 +46,7 @@ void MultipVTX()
     
     if (i%1000 == 0) cout << i << "/" << eSize << endl;
   }
-
+  cout << "Full: " << eIDListFull.size() << ", Reduced: " << eIDList.size() << endl;
   int eIDSize = eIDList.size();
   
   for (int i = 0; i < eIDSize; i++)

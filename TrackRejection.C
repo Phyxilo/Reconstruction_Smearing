@@ -12,30 +12,28 @@ vector<int> trIDListFull;
 
 void TrackRejection()
 {
-  //char fName[64];
-
-  //sprintf(fName, "/home/phyxilo/root/macros/Smearing/Vertexing/SelectedTrueMC_000.root");
-
-  TFile *monteCarlo = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/SelectedMC_01.root");
+  //TFile *monteCarlo = TFile::Open("/home/phyxilo/Downloads/dataFile/PD04.root");
+  TFile *monteCarlo = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/vertexingIPCutApplied_500.root");
   TTree *MCTree = (TTree*)monteCarlo->Get("TRK");
-  
   /*
   TLeaf *trId = MCTree->GetLeaf("trk_id");
   TLeaf *MCTX = MCTree->GetLeaf("tx");
   TLeaf *MCTY = MCTree->GetLeaf("ty");
+  TLeaf *vtxId = MCTree->GetLeaf("vID");
   */
-
-  TFile MCFile("vertexingTrReduced.root","recreate");
-
-  TTree *TrkTree = new TTree("TRK","Track");
 
   TLeaf *MCTX = MCTree->GetLeaf("SlpTX");
   TLeaf *MCTY = MCTree->GetLeaf("SlpTY");
   TLeaf *MCT2 = MCTree->GetLeaf("SlpT2");
   TLeaf *trId = MCTree->GetLeaf("TrackID");
   TLeaf *vtxId = MCTree->GetLeaf("VertexID");
+  TLeaf *imPar = MCTree->GetLeaf("ImpactPar");
 
-  float tX, tY, t2;
+  TFile MCFile("vertexingTrReducedMC.root","recreate");
+
+  TTree *TrkTree = new TTree("TRK","Track");
+
+  float tX, tY, t2, ip;
   int tId, vId;
 
   TBranch *eTXBr = TrkTree->Branch("SlpTX", &tX, "SlpTX/F");
@@ -43,6 +41,10 @@ void TrackRejection()
   TBranch *eT2Br = TrkTree->Branch("SlpT2", &t2, "SlpT2/F");
   TBranch *vtxIDBr = TrkTree->Branch("VertexID", &vId, "VertexID/I");
   TBranch *eIDBr = TrkTree->Branch("TrackID", &tId, "TrackID/I");
+  TBranch *eIpBr = TrkTree->Branch("ImpacPar", &ip, "ImpactPar/F");
+
+  //int mlt;
+  //TBranch *eIDBr = VtxTree->Branch("Muliplicity", &mlt, "Muliplicity/I");
 
   //MCTree->SetAutoFlush(100);
   //TrkTree->SetAutoFlush(100);
@@ -64,8 +66,10 @@ void TrackRejection()
        
       tX = MCTX->GetValue();
       tY = MCTY->GetValue();
-      t2 = MCT2->GetValue();
-      
+      //t2 = MCT2->GetValue();
+      t2 = sqrt(tX*tX+tY*tY);
+      ip = imPar->GetValue();
+
       //TrkTree = MCTree->CloneTree(i);
 
       TrkTree->Fill();

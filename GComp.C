@@ -62,11 +62,13 @@ void GComp()
   Canvas->SetWindowSize(1920, 1080);
   Canvas->SetCanvasSize(192*6, 108*6);
 
-  data = TFile::Open("/home/phyxilo/Downloads/dataFile/data.root");
+  //data = TFile::Open("/home/phyxilo/Downloads/dataFile/Merged/PD04.root");
+  data = TFile::Open("Vertexing/PD04_p036.root");
   monteCarloTrue = TFile::Open("/home/phyxilo/root/macros/Smearing/TrueMC/trueMC.root");
   monteCarlo0 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_000.root");
   monteCarlo1 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_005.root");
   monteCarlo2 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_01.root");
+  //monteCarlo2 = TFile::Open("/home/phyxilo/root/macros/Smearing/vertexingMultipMC_500.root");
 
   HistDraw();
 
@@ -130,6 +132,7 @@ void HistDraw()
     eTXDataHist->Fill(bfDataX);
     eTYDataHist->Fill(bfDataY);
     eT2DataHist->Fill(sqrt(bfDataX*bfDataX + bfDataY*bfDataY));
+
   }
   for (int i = 0; i < treeDataVtx->GetEntriesFast(); i++)
   {
@@ -137,6 +140,7 @@ void HistDraw()
 
     DataMultHist->Fill(mltData->GetValue());
   }
+  
   
   for (int i = 0; i < treeMC0->GetEntriesFast(); i++)
   {
@@ -288,8 +292,8 @@ void HistFormatMulti(vector<TH1F*> HistArr)
 
   HistArr[0]->SetLineColor(kRed); HistArr[0]->Draw("HIST E1"); 
   HistArr[1]->SetLineColor(kBlue); HistArr[1]->Draw("SAME HIST");
-  HistArr[2]->SetLineColor(kOrange); HistArr[2]->Draw("SAME HIST");
-  HistArr[3]->SetLineColor(kGreen); HistArr[3]->Draw("SAME HIST");
+  HistArr[2]->SetLineColor(kMagenta); HistArr[2]->Draw("SAME HIST");
+  HistArr[3]->SetLineColor(kTeal+4); HistArr[3]->Draw("SAME HIST");
   //HistArr[4]->SetLineColor(kBlack); HistArr[4]->Draw("SAME HIST");
   //HistArr[3]->SetLineColor(kBlack); HistArr[3]->SetLineStyle(kSolid); HistArr[3]->Draw("SAME HIST");
 
@@ -315,15 +319,15 @@ void MultipHistFormatMulti(vector<TH1F*> HistArr)
 
   HistArr[0]->SetLineColor(kRed); HistArr[0]->Draw("HIST E1"); 
   HistArr[1]->SetLineColor(kBlue); HistArr[1]->Draw("SAME HIST");
-  HistArr[2]->SetLineColor(kOrange); HistArr[2]->Draw("SAME HIST");
-  HistArr[3]->SetLineColor(kGreen); HistArr[3]->Draw("SAME HIST");
+  HistArr[2]->SetLineColor(kMagenta); HistArr[2]->Draw("SAME HIST");
+  HistArr[3]->SetLineColor(kTeal+4); HistArr[3]->Draw("SAME HIST");
   //HistArr[4]->SetLineColor(kBlack); HistArr[4]->Draw("SAME HIST");
   //HistArr[3]->SetLineColor(kBlack); HistArr[3]->SetLineStyle(kSolid); HistArr[3]->Draw("SAME HIST");
 
   auto legendTX = new TLegend(0.1, 0.8, 0.35, 0.95);
   legendTX->SetHeader("Histogram Legend","C");
   //legendTX->AddEntry(HistArr[4],"True Monte Carlo","f");
-  legendTX->AddEntry(HistArr[3],"Monte Carlo(> 0.01)","f");
+  legendTX->AddEntry(HistArr[3],"Monte Carlo(> 0.001)","f");
   legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.005)","f");
   legendTX->AddEntry(HistArr[1],"Monte Carlo(No Selection)","f");
   legendTX->AddEntry(HistArr[0],"Data","f");
