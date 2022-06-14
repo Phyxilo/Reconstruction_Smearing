@@ -87,12 +87,12 @@ void IPCut()
         MCTrkTree->GetEntry(index);
 
         dz = MCTrkDZ->GetValue();
-        dx = VtxX - (MCTrkVX->GetValue() + MCTX->GetValue()*dz);
-        dy = VtxY - (MCTrkVY->GetValue() + MCTY->GetValue()*dz);
+        dx = VtxX - (MCTrkVX->GetValue() - MCTX->GetValue()*dz);
+        dy = VtxY - (MCTrkVY->GetValue() - MCTY->GetValue()*dz);
 
         float Ip = sqrt(dx*dx + dy*dy);
 
-        if (Ip < 500)
+        if (Ip < 10)
         {
           ip = sqrt(dx*dx + dy*dy);
           tX = MCTX->GetValue(); tY = MCTY->GetValue();

@@ -13,7 +13,7 @@ vector<int> trIDListFull;
 void TrackRejection()
 {
   //TFile *monteCarlo = TFile::Open("/home/phyxilo/Downloads/dataFile/PD04.root");
-  TFile *monteCarlo = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/vertexingIPCutApplied_500.root");
+  TFile *monteCarlo = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/ImpactParameter/vertexingIPCutApplied_10.root");
   TTree *MCTree = (TTree*)monteCarlo->Get("TRK");
   /*
   TLeaf *trId = MCTree->GetLeaf("trk_id");
@@ -29,7 +29,7 @@ void TrackRejection()
   TLeaf *vtxId = MCTree->GetLeaf("VertexID");
   TLeaf *imPar = MCTree->GetLeaf("ImpactPar");
 
-  TFile MCFile("vertexingTrReducedMC.root","recreate");
+  TFile MCFile("vertexingTrReducedMC_10.root","recreate");
 
   TTree *TrkTree = new TTree("TRK","Track");
 
