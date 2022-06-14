@@ -12,7 +12,7 @@ vector<int> eIDListFull;
 
 void IPCut()
 {
-  TFile *monteCarlo = TFile::Open("Vertexing/vertexing2022.root");
+  TFile *monteCarlo = TFile::Open("Vertexing/PD04_p036.root");
   TTree *MCTrkTree = (TTree*)monteCarlo->Get("TRK");
   TTree *MCVtxTree = (TTree*)monteCarlo->Get("VTX");
   
@@ -29,7 +29,7 @@ void IPCut()
   TLeaf *MCVtxVY = MCVtxTree->GetLeaf("vy");
   TLeaf *MCVtxVZ = MCVtxTree->GetLeaf("vz");
 
-  TFile MCFile("vertexingIPCutApplied.root","recreate");
+  TFile MCFile("vertexingIPCutAppliedData.root","recreate");
 
   TTree *TrkTree = new TTree("TRK","Track");
   /*
@@ -92,7 +92,7 @@ void IPCut()
 
         float Ip = sqrt(dx*dx + dy*dy);
 
-        if (Ip < 10)
+        if (/*Ip < 10*/ true)
         {
           ip = sqrt(dx*dx + dy*dy);
           tX = MCTX->GetValue(); tY = MCTY->GetValue();
