@@ -307,7 +307,7 @@ void HistFormatMulti(vector<TH1F*> HistArr)
   legendTX->SetHeader("Histogram Legend","C");
   //legendTX->AddEntry(HistArr[4],"True Monte Carlo","f");
   //legendTX->AddEntry(HistArr[3],"Monte Carlo(> 0.01)","f");
-  legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.005)","f");
+  legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.01)","f");
   legendTX->AddEntry(HistArr[1],"Monte Carlo(No Selection)","f");
   legendTX->AddEntry(HistArr[0],"Data","f");
   legendTX->Draw();
@@ -334,7 +334,7 @@ void MultipHistFormatMulti(vector<TH1F*> HistArr)
   legendTX->SetHeader("Histogram Legend","C");
   //legendTX->AddEntry(HistArr[4],"True Monte Carlo","f");
   //legendTX->AddEntry(HistArr[3],"Monte Carlo(> 0.01)","f");
-  legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.005)","f");
+  legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.01)","f");
   legendTX->AddEntry(HistArr[1],"Monte Carlo(No Selection)","f");
   legendTX->AddEntry(HistArr[0],"Data","f");
   legendTX->Draw();
