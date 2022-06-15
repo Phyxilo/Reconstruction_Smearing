@@ -65,18 +65,19 @@ void GComp()
   //data = TFile::Open("/home/phyxilo/Downloads/dataFile/Merged/PD04.root");
   data = TFile::Open("Vertexing/PD04_p036.root");
   monteCarloTrue = TFile::Open("/home/phyxilo/root/macros/Smearing/TrueMC/trueMC.root");
-  monteCarlo0 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_000.root");
-  monteCarlo1 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_005.root");
+  monteCarlo0 = TFile::Open("Vertexing/MultipSelectedData_01.root");
+  monteCarlo1 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_000.root");
   monteCarlo2 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_01.root");
+  //monteCarlo2 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_01.root");
   //monteCarlo2 = TFile::Open("/home/phyxilo/root/macros/Smearing/vertexingMultipMC_500.root");
 
   HistDraw();
 
   vector<TH1F*> histListTX, histListTY, histListT2, histListMlt;
-  histListTX.push_back(eTXDataHist); histListTX.push_back(eTXMC0Hist); histListTX.push_back(eTXMC1Hist); histListTX.push_back(eTXMC2Hist); //histListTX.push_back(eTXMCTrueHist);
-  histListTY.push_back(eTYDataHist); histListTY.push_back(eTYMC0Hist); histListTY.push_back(eTYMC1Hist); histListTY.push_back(eTYMC2Hist); //histListTY.push_back(eTYMCTrueHist);
-  histListT2.push_back(eT2DataHist); histListT2.push_back(eT2MC0Hist); histListT2.push_back(eT2MC1Hist); histListT2.push_back(eT2MC2Hist); //histListT2.push_back(eT2MCTrueHist);
-  histListMlt.push_back(DataMultHist); histListMlt.push_back(MC0MultHist); histListMlt.push_back(MC1MultHist); histListMlt.push_back(MC2MultHist); //histListMlt.push_back(MCTrueMultHist);
+  /*histListTX.push_back(eTXDataHist);*/ histListTX.push_back(eTXMC0Hist); histListTX.push_back(eTXMC1Hist); histListTX.push_back(eTXMC2Hist); //histListTX.push_back(eTXMCTrueHist);
+  /*histListTY.push_back(eTYDataHist);*/ histListTY.push_back(eTYMC0Hist); histListTY.push_back(eTYMC1Hist); histListTY.push_back(eTYMC2Hist); //histListTY.push_back(eTYMCTrueHist);
+  /*histListT2.push_back(eT2DataHist);*/ histListT2.push_back(eT2MC0Hist); histListT2.push_back(eT2MC1Hist); histListT2.push_back(eT2MC2Hist); //histListT2.push_back(eT2MCTrueHist);
+  /*histListMlt.push_back(DataMultHist);*/ histListMlt.push_back(MC0MultHist); histListMlt.push_back(MC1MultHist); histListMlt.push_back(MC2MultHist); //histListMlt.push_back(MCTrueMultHist);
 
   Canvas->Print( outNameBegin,"pdf");
 
@@ -242,7 +243,7 @@ void HistDraw()
   //eventSizeTrueMC = 10000;
   eventSizeData = treeDataVtx->GetEntriesFast();
 
-  cout << "MC0: " << eventSizeMC0 << ", MC1: " << eventSizeMC1 << ", MC2:" << eventSizeMC2 << endl;
+  cout << "MC0: " << eventSizeMC0 << ", MC1: " << eventSizeMC1 << ", MC2: " << eventSizeMC2 << endl;
 
 }
 
@@ -282,10 +283,15 @@ void HistFormatMulti(vector<TH1F*> HistArr)
   //Hist0->Scale(1./Hist0->Integral());
   //Hist1->Scale(1./Hist1->Integral());
 
+  /*
   HistArr[1]->Scale(eventSizeData/eventSizeMC0);
   HistArr[2]->Scale(eventSizeData/eventSizeMC1);
   HistArr[3]->Scale(eventSizeData/eventSizeMC2);
   //HistArr[4]->Scale(eventSizeData/eventSizeTrueMC);
+  */
+
+  HistArr[1]->Scale(eventSizeMC0/eventSizeMC1);
+  HistArr[2]->Scale(eventSizeMC0/eventSizeMC2);
 
 
   HistArr[0]->GetYaxis()->SetRangeUser(0, 200000);
@@ -293,14 +299,14 @@ void HistFormatMulti(vector<TH1F*> HistArr)
   HistArr[0]->SetLineColor(kRed); HistArr[0]->Draw("HIST E1"); 
   HistArr[1]->SetLineColor(kBlue); HistArr[1]->Draw("SAME HIST");
   HistArr[2]->SetLineColor(kMagenta); HistArr[2]->Draw("SAME HIST");
-  HistArr[3]->SetLineColor(kTeal+4); HistArr[3]->Draw("SAME HIST");
+  //HistArr[3]->SetLineColor(kTeal+4); HistArr[3]->Draw("SAME HIST");
   //HistArr[4]->SetLineColor(kBlack); HistArr[4]->Draw("SAME HIST");
   //HistArr[3]->SetLineColor(kBlack); HistArr[3]->SetLineStyle(kSolid); HistArr[3]->Draw("SAME HIST");
 
   auto legendTX = new TLegend(0.1, 0.8, 0.35, 0.95);
   legendTX->SetHeader("Histogram Legend","C");
   //legendTX->AddEntry(HistArr[4],"True Monte Carlo","f");
-  legendTX->AddEntry(HistArr[3],"Monte Carlo(> 0.01)","f");
+  //legendTX->AddEntry(HistArr[3],"Monte Carlo(> 0.01)","f");
   legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.005)","f");
   legendTX->AddEntry(HistArr[1],"Monte Carlo(No Selection)","f");
   legendTX->AddEntry(HistArr[0],"Data","f");
@@ -311,7 +317,7 @@ void MultipHistFormatMulti(vector<TH1F*> HistArr)
 {
   HistArr[1]->Scale(HistArr[0]->Integral()/HistArr[1]->Integral());
   HistArr[2]->Scale(HistArr[0]->Integral()/HistArr[2]->Integral());
-  HistArr[3]->Scale(HistArr[0]->Integral()/HistArr[3]->Integral());
+  //HistArr[3]->Scale(HistArr[0]->Integral()/HistArr[3]->Integral());
   //HistArr[4]->Scale(eventSizeData/eventSizeTrueMC);
 
 
@@ -320,14 +326,14 @@ void MultipHistFormatMulti(vector<TH1F*> HistArr)
   HistArr[0]->SetLineColor(kRed); HistArr[0]->Draw("HIST E1"); 
   HistArr[1]->SetLineColor(kBlue); HistArr[1]->Draw("SAME HIST");
   HistArr[2]->SetLineColor(kMagenta); HistArr[2]->Draw("SAME HIST");
-  HistArr[3]->SetLineColor(kTeal+4); HistArr[3]->Draw("SAME HIST");
+  //HistArr[3]->SetLineColor(kTeal+4); HistArr[3]->Draw("SAME HIST");
   //HistArr[4]->SetLineColor(kBlack); HistArr[4]->Draw("SAME HIST");
   //HistArr[3]->SetLineColor(kBlack); HistArr[3]->SetLineStyle(kSolid); HistArr[3]->Draw("SAME HIST");
 
   auto legendTX = new TLegend(0.1, 0.8, 0.35, 0.95);
   legendTX->SetHeader("Histogram Legend","C");
   //legendTX->AddEntry(HistArr[4],"True Monte Carlo","f");
-  legendTX->AddEntry(HistArr[3],"Monte Carlo(> 0.001)","f");
+  //legendTX->AddEntry(HistArr[3],"Monte Carlo(> 0.01)","f");
   legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.005)","f");
   legendTX->AddEntry(HistArr[1],"Monte Carlo(No Selection)","f");
   legendTX->AddEntry(HistArr[0],"Data","f");

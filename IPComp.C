@@ -12,8 +12,8 @@ using namespace std;
 
 TCanvas *Canvas= new TCanvas("Canvas","Histogram Canvas",20,20,1920,1080);
 
-TH1F *IPData = new TH1F("IPData","Impact Parameter Histogram",25,0,30);
-TH1F *IPMC = new TH1F("IPMC","Impact Parameter Histogram",25,0,30);
+TH1F *IPData = new TH1F("IPData","Impact Parameter Histogram",50,0,30);
+TH1F *IPMC = new TH1F("IPMC","Impact Parameter Histogram",50,0,30);
 
 TFile *data, *monteCarlo;
 
@@ -63,7 +63,7 @@ void IPComp()
   IPData->Draw("HIST E1"); IPData->SetLineColor(kRed);
   IPMC->Draw("SAME HIST"); IPMC->SetLineColor(kBlue);
 
-  IPData->GetYaxis()->SetRangeUser(0, 320000);
+  IPData->GetYaxis()->SetRangeUser(0, 200000);
 
   auto legendTX = new TLegend(0.1, 0.8, 0.32, 0.9);
   legendTX->SetHeader("Histogram Legend","C");

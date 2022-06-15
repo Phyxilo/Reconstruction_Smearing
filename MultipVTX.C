@@ -13,7 +13,7 @@ vector<int> eIDListFull;
 
 void MultipVTX()
 {
-  TFile *monteCarlo = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/ImpactParameter/vertexingIPCutAppliedData_10.root");
+  TFile *monteCarlo = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Selected/SelectedData_01.root");
 
   float tX, tY, t2;
   int mlt;
@@ -21,7 +21,7 @@ void MultipVTX()
   TTree *MCTree = (TTree*)monteCarlo->Get("TRK");
   TLeaf *MCeID = MCTree->GetLeaf("VertexID");
 
-  TFile outFile("vertexingMultipData.root","recreate");
+  TFile outFile("MultipSelectedData_01.root","recreate");
   TTree *TrkTree = new TTree("TRK","Track");
   TTree *VtxTree = new TTree("VTX","Vertex");
   TBranch *mltBr = VtxTree->Branch("Multip", &mlt, "Multip/I");
