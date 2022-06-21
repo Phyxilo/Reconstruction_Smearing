@@ -65,9 +65,9 @@ void GComp()
   //data = TFile::Open("/home/phyxilo/Downloads/dataFile/Merged/PD04.root");
   data = TFile::Open("Vertexing/PD04_p036.root");
   monteCarloTrue = TFile::Open("/home/phyxilo/root/macros/Smearing/TrueMC/trueMC.root");
-  monteCarlo0 = TFile::Open("Vertexing/MultipSelectedData_01.root");
-  monteCarlo1 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_000.root");
-  monteCarlo2 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_01.root");
+  monteCarlo0 = TFile::Open("Vertexing/PD10_pl36/MultipVertexingData_0.001.root");
+  monteCarlo1 = TFile::Open("Vertexing/PD10_pl36/VertexingMC.root");
+  monteCarlo2 = TFile::Open("Vertexing/PD10_pl36/MultipVertexingMC_0.001.root");
   //monteCarlo2 = TFile::Open("/home/phyxilo/root/macros/Smearing/Vertexing/Reduced/MultipCalculated/vertexingTrReduced_01.root");
   //monteCarlo2 = TFile::Open("/home/phyxilo/root/macros/Smearing/vertexingMultipMC_500.root");
 
@@ -113,7 +113,7 @@ void HistDraw()
   //TLeaf *eTXMC2 = treeMC2->GetLeaf("t.eTX"); TLeaf *eTYMC2 = treeMC2->GetLeaf("t.eTY"); TLeaf *eIDMC2 = treeMC2->GetLeaf("t.eMCEvt");
   TLeaf *eTXMCTrue = treeMCTrue->GetLeaf("SlpTX"); TLeaf *eTYMCTrue = treeMCTrue->GetLeaf("SlpTY"); TLeaf *eT2MCTrue = treeMCTrue->GetLeaf("SlpT2");
   TLeaf *eTXMC0 = treeMC0->GetLeaf("SlpTX"); TLeaf *eTYMC0 = treeMC0->GetLeaf("SlpTY"); TLeaf *eIDMC0 = treeMC0->GetLeaf("VertexID"); TLeaf *multMC0 = treeVtxMC0->GetLeaf("Multip");
-  TLeaf *eTXMC1 = treeMC1->GetLeaf("SlpTX"); TLeaf *eTYMC1 = treeMC1->GetLeaf("SlpTY"); TLeaf *eIDMC1 = treeMC1->GetLeaf("VertexID"); TLeaf *multMC1 = treeVtxMC1->GetLeaf("Multip");
+  TLeaf *eTXMC1 = treeMC1->GetLeaf("tx"); TLeaf *eTYMC1 = treeMC1->GetLeaf("ty"); TLeaf *eIDMC1 = treeMC1->GetLeaf("vID"); TLeaf *multMC1 = treeVtxMC1->GetLeaf("n_1ry_trk");
   TLeaf *eTXMC2 = treeMC2->GetLeaf("SlpTX"); TLeaf *eTYMC2 = treeMC2->GetLeaf("SlpTY"); TLeaf *eIDMC2 = treeMC2->GetLeaf("VertexID"); TLeaf *multMC2 = treeVtxMC2->GetLeaf("Multip");
  
   /*TLeaf *PlateIDMC0 = treeMC0->GetLeaf("t.ePID");*//* TLeaf *PlateIDMC1 = treeMC1->GetLeaf("t.ePID"); TLeaf *PlateIDMC2 = treeMC2->GetLeaf("t.ePID");*/
@@ -307,7 +307,7 @@ void HistFormatMulti(vector<TH1F*> HistArr)
   legendTX->SetHeader("Histogram Legend","C");
   //legendTX->AddEntry(HistArr[4],"True Monte Carlo","f");
   //legendTX->AddEntry(HistArr[3],"Monte Carlo(> 0.01)","f");
-  legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.01)","f");
+  legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.001)","f");
   legendTX->AddEntry(HistArr[1],"Monte Carlo(No Selection)","f");
   legendTX->AddEntry(HistArr[0],"Data","f");
   legendTX->Draw();
@@ -334,7 +334,7 @@ void MultipHistFormatMulti(vector<TH1F*> HistArr)
   legendTX->SetHeader("Histogram Legend","C");
   //legendTX->AddEntry(HistArr[4],"True Monte Carlo","f");
   //legendTX->AddEntry(HistArr[3],"Monte Carlo(> 0.01)","f");
-  legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.01)","f");
+  legendTX->AddEntry(HistArr[2],"Monte Carlo(> 0.001)","f");
   legendTX->AddEntry(HistArr[1],"Monte Carlo(No Selection)","f");
   legendTX->AddEntry(HistArr[0],"Data","f");
   legendTX->Draw();
