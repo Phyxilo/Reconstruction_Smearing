@@ -231,27 +231,27 @@ void MCComp()
 
   SlpTXHist1->GetYaxis()->SetRangeUser(0, 200000); 
   
-  SlpTXHist1->Draw("HIST"); SlpTXHist1->SetLineColor(kRed); SlpTXHist1->SetLineStyle(kDotted); SlpTXHist1->SetLineWidth(2);
+  SlpTXHist1->Draw("HIST"); SlpTXHist1->SetLineColor(kBlue); SlpTXHist1->SetLineStyle(1); SlpTXHist1->SetLineWidth(2);
 
   Canvas->Modified(); Canvas->Update();
   TPaveStats *statBoxSlpTX1 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxSlpTX1->SetName("SlpTXHist1");
   statBoxSlpTX1->SetY1NDC(0.9);
   statBoxSlpTX1->SetY2NDC(0.7);
-  statBoxSlpTX1->SetTextColor(kRed);
+  statBoxSlpTX1->SetTextColor(kBlue);
   statBoxSlpTX1->Draw();
 
-  SlpTXHist2->Draw("SAMES HIST"); SlpTXHist2->SetLineColor(kBlue); SlpTXHist2->SetLineStyle(2); SlpTXHist2->SetLineWidth(2);
+  SlpTXHist2->Draw("SAMES HIST"); SlpTXHist2->SetLineColor(kRed); SlpTXHist2->SetLineStyle(2); SlpTXHist2->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxSlpTX2 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxSlpTX2->SetName("SlpTXHist2");
   statBoxSlpTX2->SetY1NDC(0.6);
   statBoxSlpTX2->SetY2NDC(0.4);
-  statBoxSlpTX2->SetTextColor(kBlue);
+  statBoxSlpTX2->SetTextColor(kRed);
   statBoxSlpTX2->Draw();
 
-  SlpTXHist3->Draw("SAMES HIST"); SlpTXHist3->SetLineColor(kBlack); SlpTXHist3->SetLineStyle(1); SlpTXHist3->SetLineWidth(2);
+  SlpTXHist3->Draw("SAMES HIST"); SlpTXHist3->SetLineColor(kBlack); SlpTXHist3->SetLineStyle(kDotted); SlpTXHist3->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxSlpTX3 = (TPaveStats*)Canvas->GetPrimitive("stats");
@@ -272,27 +272,27 @@ void MCComp()
 
   SlpTYHist1->GetYaxis()->SetRangeUser(0, 200000);
 
-  SlpTYHist1->Draw("HIST"); SlpTYHist1->SetLineColor(kRed); SlpTYHist1->SetLineStyle(kDotted); SlpTYHist1->SetLineWidth(2);
+  SlpTYHist1->Draw("HIST"); SlpTYHist1->SetLineColor(kBlue); SlpTYHist1->SetLineStyle(1); SlpTYHist1->SetLineWidth(2);
 
   Canvas->Modified(); Canvas->Update();
   TPaveStats *statBoxSlpTY1 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxSlpTY1->SetName("SlpTYHist1");
   statBoxSlpTY1->SetY1NDC(0.9);
   statBoxSlpTY1->SetY2NDC(0.7);
-  statBoxSlpTY1->SetTextColor(kRed);
+  statBoxSlpTY1->SetTextColor(kBlue);
   statBoxSlpTY1->Draw();
 
-  SlpTYHist2->Draw("SAMES HIST"); SlpTYHist2->SetLineColor(kBlue); SlpTYHist2->SetLineStyle(2); SlpTYHist2->SetLineWidth(2);
+  SlpTYHist2->Draw("SAMES HIST"); SlpTYHist2->SetLineColor(kRed); SlpTYHist2->SetLineStyle(2); SlpTYHist2->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxSlpTY2 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxSlpTY2->SetName("SlpTYHist2");
   statBoxSlpTY2->SetY1NDC(0.6);
   statBoxSlpTY2->SetY2NDC(0.4);
-  statBoxSlpTY2->SetTextColor(kBlue);
+  statBoxSlpTY2->SetTextColor(kRed);
   statBoxSlpTY2->Draw();
 
-  SlpTYHist3->Draw("SAMES HIST"); SlpTYHist3->SetLineColor(kBlack); SlpTYHist3->SetLineStyle(1); SlpTYHist3->SetLineWidth(2);
+  SlpTYHist3->Draw("SAMES HIST"); SlpTYHist3->SetLineColor(kBlack); SlpTYHist3->SetLineStyle(kDotted); SlpTYHist3->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxSlpTY3 = (TPaveStats*)Canvas->GetPrimitive("stats");
@@ -313,27 +313,27 @@ void MCComp()
 
   SlpT2Hist1->GetYaxis()->SetRangeUser(0, 150000);
   
-  SlpT2Hist1->Draw("HIST"); SlpT2Hist1->SetLineColor(kRed); SlpT2Hist1->SetLineStyle(kDotted); SlpT2Hist1->SetLineWidth(2);
+  SlpT2Hist1->Draw("HIST"); SlpT2Hist1->SetLineColor(kBlue); SlpT2Hist1->SetLineStyle(1); SlpT2Hist1->SetLineWidth(2);
 
   Canvas->Modified(); Canvas->Update();
   TPaveStats *statBoxSlpT21 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxSlpT21->SetName("SlpT2Hist1");
   statBoxSlpT21->SetY1NDC(0.9);
   statBoxSlpT21->SetY2NDC(0.7);
-  statBoxSlpT21->SetTextColor(kRed);
+  statBoxSlpT21->SetTextColor(kBlue);
   statBoxSlpT21->Draw();
 
-  SlpT2Hist2->Draw("SAMES HIST"); SlpT2Hist2->SetLineColor(kBlue); SlpT2Hist2->SetLineStyle(2); SlpT2Hist2->SetLineWidth(2);
+  SlpT2Hist2->Draw("SAMES HIST"); SlpT2Hist2->SetLineColor(kRed); SlpT2Hist2->SetLineStyle(2); SlpT2Hist2->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxSlpT22 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxSlpT22->SetName("SlpT2Hist2");
   statBoxSlpT22->SetY1NDC(0.6);
   statBoxSlpT22->SetY2NDC(0.4);
-  statBoxSlpT22->SetTextColor(kBlue);
+  statBoxSlpT22->SetTextColor(kRed);
   statBoxSlpT22->Draw();
 
-  SlpT2Hist3->Draw("SAMES HIST"); SlpT2Hist3->SetLineColor(kBlack); SlpT2Hist3->SetLineStyle(1); SlpT2Hist3->SetLineWidth(2);
+  SlpT2Hist3->Draw("SAMES HIST"); SlpT2Hist3->SetLineColor(kBlack); SlpT2Hist3->SetLineStyle(kDotted); SlpT2Hist3->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxSlpT23 = (TPaveStats*)Canvas->GetPrimitive("stats");
@@ -354,27 +354,27 @@ void MCComp()
 
   IPData1->GetYaxis()->SetRangeUser(0, 450000);
 
-  IPData1->Draw("HIST"); IPData1->SetLineColor(kRed); IPData1->SetLineStyle(kDotted); IPData1->SetLineWidth(2);
+  IPData1->Draw("HIST"); IPData1->SetLineColor(kBlue); IPData1->SetLineStyle(1); IPData1->SetLineWidth(2);
 
   Canvas->Modified(); Canvas->Update();
   TPaveStats *statBoxIP1 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxIP1->SetName("IPData1");
   statBoxIP1->SetY1NDC(0.9);
   statBoxIP1->SetY2NDC(0.7);
-  statBoxIP1->SetTextColor(kRed);
+  statBoxIP1->SetTextColor(kBlue);
   statBoxIP1->Draw();
 
-  IPData2->Draw("SAMES HIST"); IPData2->SetLineColor(kBlue); IPData2->SetLineStyle(2); IPData2->SetLineWidth(2);
+  IPData2->Draw("SAMES HIST"); IPData2->SetLineColor(kRed); IPData2->SetLineStyle(2); IPData2->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxIP2 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxIP2->SetName("IPData2");
   statBoxIP2->SetY1NDC(0.6);
   statBoxIP2->SetY2NDC(0.4);
-  statBoxIP2->SetTextColor(kBlue);
+  statBoxIP2->SetTextColor(kRed);
   statBoxIP2->Draw();
 
-  IPData3->Draw("SAMES HIST"); IPData3->SetLineColor(kBlack); IPData3->SetLineStyle(1); IPData3->SetLineWidth(2);
+  IPData3->Draw("SAMES HIST"); IPData3->SetLineColor(kBlack); IPData3->SetLineStyle(kDotted); IPData3->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxIP3 = (TPaveStats*)Canvas->GetPrimitive("stats");
@@ -395,27 +395,27 @@ void MCComp()
 
   Mult1->GetYaxis()->SetRangeUser(0, 5000);
 
-  Mult1->Draw("HIST"); Mult1->SetLineColor(kRed); Mult1->SetLineStyle(kDotted); Mult1->SetLineWidth(2);
+  Mult1->Draw("HIST"); Mult1->SetLineColor(kBlue); Mult1->SetLineStyle(1); Mult1->SetLineWidth(2);
 
   Canvas->Modified(); Canvas->Update();
   TPaveStats *statBoxMult1 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxMult1->SetName("Mult1");
   statBoxMult1->SetY1NDC(0.9);
   statBoxMult1->SetY2NDC(0.7);
-  statBoxMult1->SetTextColor(kRed);
+  statBoxMult1->SetTextColor(kBlue);
   statBoxMult1->Draw();
 
-  Mult2->Draw("SAMES HIST"); Mult2->SetLineColor(kBlue); Mult2->SetLineStyle(2); Mult2->SetLineWidth(2);
+  Mult2->Draw("SAMES HIST"); Mult2->SetLineColor(kRed); Mult2->SetLineStyle(2); Mult2->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxMult2 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxMult2->SetName("Mult2");
   statBoxMult2->SetY1NDC(0.6);
   statBoxMult2->SetY2NDC(0.4);
-  statBoxMult2->SetTextColor(kBlue);
+  statBoxMult2->SetTextColor(kRed);
   statBoxMult2->Draw();
 
-  Mult3->Draw("SAMES HIST"); Mult3->SetLineColor(kBlack); Mult3->SetLineStyle(1); Mult3->SetLineWidth(2);
+  Mult3->Draw("SAMES HIST"); Mult3->SetLineColor(kBlack); Mult3->SetLineStyle(kDotted); Mult3->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxMult3 = (TPaveStats*)Canvas->GetPrimitive("stats");
@@ -436,27 +436,27 @@ void MCComp()
 
   VX1->GetYaxis()->SetRangeUser(0, 900);
 
-  VX1->Draw("HIST"); VX1->SetLineColor(kRed); VX1->SetLineStyle(kDotted); VX1->SetLineWidth(2);
+  VX1->Draw("HIST"); VX1->SetLineColor(kBlue); VX1->SetLineStyle(1); VX1->SetLineWidth(2);
 
   Canvas->Modified(); Canvas->Update();
   TPaveStats *statBoxVX1 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxVX1->SetName("VX1");
   statBoxVX1->SetY1NDC(0.9);
   statBoxVX1->SetY2NDC(0.7);
-  statBoxVX1->SetTextColor(kRed);
+  statBoxVX1->SetTextColor(kBlue);
   statBoxVX1->Draw();
 
-  VX2->Draw("SAMES HIST"); VX2->SetLineColor(kBlue); VX2->SetLineStyle(2); VX2->SetLineWidth(2);
+  VX2->Draw("SAMES HIST"); VX2->SetLineColor(kRed); VX2->SetLineStyle(2); VX2->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxVX2 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxVX2->SetName("VX2");
   statBoxVX2->SetY1NDC(0.6);
   statBoxVX2->SetY2NDC(0.4);
-  statBoxVX2->SetTextColor(kBlue);
+  statBoxVX2->SetTextColor(kRed);
   statBoxVX2->Draw();
 
-  VX3->Draw("SAMES HIST"); VX3->SetLineColor(kBlack); VX3->SetLineStyle(1); VX3->SetLineWidth(2);
+  VX3->Draw("SAMES HIST"); VX3->SetLineColor(kBlack); VX3->SetLineStyle(kDotted); VX3->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxVX3 = (TPaveStats*)Canvas->GetPrimitive("stats");
@@ -477,27 +477,27 @@ void MCComp()
 
   VY1->GetYaxis()->SetRangeUser(0, 900);
 
-  VY1->Draw("HIST"); VY1->SetLineColor(kRed); VY1->SetLineStyle(kDotted); VY1->SetLineWidth(2);
+  VY1->Draw("HIST"); VY1->SetLineColor(kBlue); VY1->SetLineStyle(1); VY1->SetLineWidth(2);
 
   Canvas->Modified(); Canvas->Update();
   TPaveStats *statBoxVY1 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxVY1->SetName("VY1");
   statBoxVY1->SetY1NDC(0.9);
   statBoxVY1->SetY2NDC(0.7);
-  statBoxVY1->SetTextColor(kRed);
+  statBoxVY1->SetTextColor(kBlue);
   statBoxVY1->Draw();
 
-  VY2->Draw("SAMES HIST"); VY2->SetLineColor(kBlue); VY2->SetLineStyle(2); VY2->SetLineWidth(2);
+  VY2->Draw("SAMES HIST"); VY2->SetLineColor(kRed); VY2->SetLineStyle(2); VY2->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxVY2 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxVY2->SetName("VY2");
   statBoxVY2->SetY1NDC(0.6);
   statBoxVY2->SetY2NDC(0.4);
-  statBoxVY2->SetTextColor(kBlue);
+  statBoxVY2->SetTextColor(kRed);
   statBoxVY2->Draw();
 
-  VY3->Draw("SAMES HIST"); VY3->SetLineColor(kBlack); VY3->SetLineStyle(1); VY3->SetLineWidth(2);
+  VY3->Draw("SAMES HIST"); VY3->SetLineColor(kBlack); VY3->SetLineStyle(kDotted); VY3->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxVY3 = (TPaveStats*)Canvas->GetPrimitive("stats");
@@ -518,27 +518,27 @@ void MCComp()
 
   VZ1->GetYaxis()->SetRangeUser(0, 5000);
 
-  VZ1->Draw("HIST"); VZ1->SetLineColor(kRed); VZ1->SetLineStyle(kDotted); VZ1->SetLineWidth(2);
+  VZ1->Draw("HIST"); VZ1->SetLineColor(kBlue); VZ1->SetLineStyle(1); VZ1->SetLineWidth(2);
 
   Canvas->Modified(); Canvas->Update();
   TPaveStats *statBoxVZ1 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxVZ1->SetName("VZ1");
   statBoxVZ1->SetY1NDC(0.9);
   statBoxVZ1->SetY2NDC(0.7);
-  statBoxVZ1->SetTextColor(kRed);
+  statBoxVZ1->SetTextColor(kBlue);
   statBoxVZ1->Draw();
 
-  VZ2->Draw("SAMES HIST"); VZ2->SetLineColor(kBlue); VZ2->SetLineStyle(2); VZ2->SetLineWidth(2);
+  VZ2->Draw("SAMES HIST"); VZ2->SetLineColor(kRed); VZ2->SetLineStyle(2); VZ2->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxVZ2 = (TPaveStats*)Canvas->GetPrimitive("stats");
   statBoxVZ2->SetName("VZ2");
   statBoxVZ2->SetY1NDC(0.6);
   statBoxVZ2->SetY2NDC(0.4);
-  statBoxVZ2->SetTextColor(kBlue);
+  statBoxVZ2->SetTextColor(kRed);
   statBoxVZ2->Draw();
 
-  VZ3->Draw("SAMES HIST"); VZ3->SetLineColor(kBlack); VZ3->SetLineStyle(1); VZ3->SetLineWidth(2);
+  VZ3->Draw("SAMES HIST"); VZ3->SetLineColor(kBlack); VZ3->SetLineStyle(kDotted); VZ3->SetLineWidth(2);
 
   Canvas->Update();
   TPaveStats *statBoxVZ3 = (TPaveStats*)Canvas->GetPrimitive("stats");
