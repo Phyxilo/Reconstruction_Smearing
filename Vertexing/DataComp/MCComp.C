@@ -8,217 +8,574 @@
 #include "TBrowser.h"
 #include "TH2.h"
 
+#include "TPaveStats.h"
+#include "TPaveText.h"
+#include "TText.h"
+#include "TPavesText.h"
+
 using namespace std;
 
 TCanvas *Canvas= new TCanvas("Canvas","Histogram Canvas",20,20,1920,1080);
 
-TH1F *SlpTXHist1 = new TH1F("SlpTXHist1","X Slope Histogram",50,-0.4,0.4);
-TH1F *SlpTXHist2 = new TH1F("SlpTXHist2","X Slope Histogram",50,-0.4,0.4);
-TH1F *SlpTXHist3 = new TH1F("SlpTXHist3","X Slope Histogram",50,-0.4,0.4);
+TH1F *SlpTXHist1 = new TH1F("SlpTXHist1","X Slope",50,-0.4,0.4);
+TH1F *SlpTXHist2 = new TH1F("SlpTXHist2","X Slope",50,-0.4,0.4);
+TH1F *SlpTXHist3 = new TH1F("SlpTXHist3","X Slope",50,-0.4,0.4);
 
-TH1F *SlpTYHist1 = new TH1F("SlpTYHist1","Y Slope Histogram",50,-0.4,0.4);
-TH1F *SlpTYHist2 = new TH1F("SlpTYHist2","Y Slope Histogram",50,-0.4,0.4);
-TH1F *SlpTYHist3 = new TH1F("SlpTYHist3","Y Slope Histogram",50,-0.4,0.4);
+TH1F *SlpTYHist1 = new TH1F("SlpTYHist1","Y Slope",50,-0.4,0.4);
+TH1F *SlpTYHist2 = new TH1F("SlpTYHist2","Y Slope",50,-0.4,0.4);
+TH1F *SlpTYHist3 = new TH1F("SlpTYHist3","Y Slope",50,-0.4,0.4);
 
-TH1F *SlpT2Hist1 = new TH1F("SlpT2Hist1","Space Angle Histogram",50,0,0.5);
-TH1F *SlpT2Hist2 = new TH1F("SlpT2Hist2","Space Angle Histogram",50,0,0.5);
-TH1F *SlpT2Hist3 = new TH1F("SlpT2Hist3","Space Angle Histogram",50,0,0.5);
+TH1F *SlpT2Hist1 = new TH1F("SlpT2Hist1","Space Angle",50,0,0.5);
+TH1F *SlpT2Hist2 = new TH1F("SlpT2Hist2","Space Angle",50,0,0.5);
+TH1F *SlpT2Hist3 = new TH1F("SlpT2Hist3","Space Angle",50,0,0.5);
 
-TH1F *IPMC1 = new TH1F("IPMC","Impact Parameter Histogram",50,0,30);
-TH1F *IPMC2 = new TH1F("IPMC","Impact Parameter Histogram",50,0,30);
-TH1F *IPMC3 = new TH1F("IPMC","Impact Parameter Histogram",50,0,30);
+TH1F *IPData1 = new TH1F("IPData1","Impact Parameter",50,0,30);
+TH1F *IPData2 = new TH1F("IPData2","Impact Parameter",50,0,30);
+TH1F *IPData3 = new TH1F("IPData3","Impact Parameter",50,0,30);
 
-TH1F *Mult1 = new TH1F("Mult1","Multiplicity Histogram",50,0,50);
-TH1F *Mult2 = new TH1F("Mult2","Multiplicity Histogram",50,0,50);
-TH1F *Mult3 = new TH1F("Mult3","Multiplicity Histogram",50,0,50);
+TH1F *Mult1 = new TH1F("Mult1","Multiplicity",50,0,50);
+TH1F *Mult2 = new TH1F("Mult2","Multiplicity",50,0,50);
+TH1F *Mult3 = new TH1F("Mult3","Multiplicity",50,0,50);
 
-TFile *monteCarlo1, *monteCarlo2, *monteCarlo3;
+TH1F *VX1 = new TH1F("VX1","Vertex X",100,10000,140000);
+TH1F *VX2 = new TH1F("VX2","Vertex X",100,10000,140000);
+TH1F *VX3 = new TH1F("VX3","Vertex X",100,10000,140000);
 
-int MC1VtxSize, MC2VtxSize, MC3VtxSize;
+TH1F *VY1 = new TH1F("VY1","Vertex Y",100,10000,110000);
+TH1F *VY2 = new TH1F("VY2","Vertex Y",100,10000,110000);
+TH1F *VY3 = new TH1F("VY3","Vertex Y",100,10000,110000);
+
+TH1F *VZ1 = new TH1F("VZ1","Vertex Z",100,1000,6500);
+TH1F *VZ2 = new TH1F("VZ2","Vertex Z",100,1000,6500);
+TH1F *VZ3 = new TH1F("VZ3","Vertex Z",100,1000,6500);
+
+TH2F *VXY1 = new TH2F("VXY1","Vertex X vs Y",100,10000,90000,100,10000,90000);
+TH2F *VXY2 = new TH2F("VXY2","Vertex X vs Y",100,10000,90000,100,10000,90000);
+TH2F *VXY3 = new TH2F("VXY3","Vertex X vs Y",100,10000,90000,100,10000,90000);
+
+TFile *Data1, *Data2, *Data3, *DataRaw1, *DataRaw2, *DataRaw3;
+
+int Data1VtxSize, Data2VtxSize, Data3VtxSize;
 
 void MCComp()
 {
   Canvas->SetWindowSize(1920, 1080);
   Canvas->SetCanvasSize(192*6, 108*6);
 
-  monteCarlo1 = TFile::Open("Multip/20210616_PD04.root");
-  monteCarlo2 = TFile::Open("Multip/20220610_PD04.root");
-  monteCarlo3 = TFile::Open("Multip/20220622_PD04.root");
+  Data1 = TFile::Open("Multip/20210616_PD04.root");
+  Data2 = TFile::Open("Multip/20220610_PD04.root");
+  Data3 = TFile::Open("Multip/20220622_PD04.root");
 
-  TTree *treeMCTrk1 = (TTree*)monteCarlo1->Get("TRK");
-  TTree *treeMCTrk2 = (TTree*)monteCarlo2->Get("TRK");
-  TTree *treeMCTrk3 = (TTree*)monteCarlo3->Get("TRK");
+  DataRaw1 = TFile::Open("Raw/20210616_PD04.root");
+  DataRaw2 = TFile::Open("Raw/20220610_PD04.root");
+  DataRaw3 = TFile::Open("Raw/20220622_PD04.root");
 
-  TTree *treeMCVtx1 = (TTree*)monteCarlo1->Get("VTX");
-  TTree *treeMCVtx2 = (TTree*)monteCarlo2->Get("VTX");
-  TTree *treeMCVtx3 = (TTree*)monteCarlo3->Get("VTX");
+  TTree *treeDataTrk1 = (TTree*)Data1->Get("TRK");
+  TTree *treeDataTrk2 = (TTree*)Data2->Get("TRK");
+  TTree *treeDataTrk3 = (TTree*)Data3->Get("TRK");
 
-  MC1VtxSize = treeMCVtx1->GetEntriesFast();
-  MC2VtxSize = treeMCVtx2->GetEntriesFast();
-  MC3VtxSize = treeMCVtx3->GetEntriesFast();
+  TTree *treeDataVtx1 = (TTree*)Data1->Get("VTX");
+  TTree *treeDataVtx2 = (TTree*)Data2->Get("VTX");
+  TTree *treeDataVtx3 = (TTree*)Data3->Get("VTX");
 
-  for (int i = 0; i < treeMCTrk1->GetEntriesFast(); i++)
+  TTree *treeDataVtxRaw1 = (TTree*)DataRaw1->Get("VTX");
+  TTree *treeDataVtxRaw2 = (TTree*)DataRaw2->Get("VTX");
+  TTree *treeDataVtxRaw3 = (TTree*)DataRaw3->Get("VTX");
+
+  Data1VtxSize = treeDataVtx1->GetEntriesFast();
+  Data2VtxSize = treeDataVtx2->GetEntriesFast();
+  Data3VtxSize = treeDataVtx3->GetEntriesFast();
+
+  for (int i = 0; i < treeDataTrk1->GetEntriesFast(); i++)
   {
-    treeMCTrk1->GetEntry(i);
+    treeDataTrk1->GetEntry(i);
     
-    TLeaf *slpTX = treeMCTrk1->GetLeaf("SlpTX");
-    TLeaf *slpTY = treeMCTrk1->GetLeaf("SlpTY");
-    TLeaf *slpT2 = treeMCTrk1->GetLeaf("SlpT2");
-    TLeaf *IP = treeMCTrk1->GetLeaf("ImpactPar");
+    TLeaf *slpTX = treeDataTrk1->GetLeaf("SlpTX");
+    TLeaf *slpTY = treeDataTrk1->GetLeaf("SlpTY");
+    //TLeaf *slpT2 = treeDataTrk1->GetLeaf("SlpT2");
+    TLeaf *beamTX = treeDataTrk1->GetLeaf("BeamTX");
+    TLeaf *beamTY = treeDataTrk1->GetLeaf("BeamTY");
+    TLeaf *IP = treeDataTrk1->GetLeaf("ImpactPar");
+
+    double TX = slpTX->GetValue() - beamTX->GetValue();
+    double TY = slpTY->GetValue() - beamTY->GetValue();
     
-    SlpTXHist1->Fill(slpTX->GetValue());
-    SlpTYHist1->Fill(slpTY->GetValue());
-    SlpT2Hist1->Fill(slpT2->GetValue());
-    IPMC1->Fill(IP->GetValue());
+    SlpTXHist1->Fill(TX);
+    SlpTYHist1->Fill(TY);
+    //SlpT2Hist1->Fill(slpT2->GetValue());
+    SlpT2Hist1->Fill(sqrt(TX*TX+TY*TY));
+    IPData1->Fill(IP->GetValue());
   }
 
-  for (int i = 0; i < treeMCTrk2->GetEntriesFast(); i++)
+  for (int i = 0; i < treeDataTrk2->GetEntriesFast(); i++)
   {
-    treeMCTrk2->GetEntry(i);
+    treeDataTrk2->GetEntry(i);
 
-    TLeaf *slpTX = treeMCTrk2->GetLeaf("SlpTX");
-    TLeaf *slpTY = treeMCTrk2->GetLeaf("SlpTY");
-    TLeaf *slpT2 = treeMCTrk2->GetLeaf("SlpT2");
-    TLeaf *IP = treeMCTrk2->GetLeaf("ImpactPar");
+    TLeaf *slpTX = treeDataTrk2->GetLeaf("SlpTX");
+    TLeaf *slpTY = treeDataTrk2->GetLeaf("SlpTY");
+    //TLeaf *slpT2 = treeDataTrk2->GetLeaf("SlpT2");
+    TLeaf *beamTX = treeDataTrk2->GetLeaf("BeamTX");
+    TLeaf *beamTY = treeDataTrk2->GetLeaf("BeamTY");
+    TLeaf *IP = treeDataTrk2->GetLeaf("ImpactPar");
 
-    SlpTXHist2->Fill(slpTX->GetValue());
-    SlpTYHist2->Fill(slpTY->GetValue());
-    SlpT2Hist2->Fill(slpT2->GetValue());
-    IPMC2->Fill(IP->GetValue());
+    double TX = slpTX->GetValue() - beamTX->GetValue();
+    double TY = slpTY->GetValue() - beamTY->GetValue();
+
+    SlpTXHist2->Fill(TX);
+    SlpTYHist2->Fill(TY);
+    //SlpT2Hist2->Fill(slpT2->GetValue());
+    SlpT2Hist2->Fill(sqrt(TX*TX+TY*TY));
+    IPData2->Fill(IP->GetValue());
   }
 
-  for (int i = 0; i < treeMCTrk3->GetEntriesFast(); i++)
+  for (int i = 0; i < treeDataTrk3->GetEntriesFast(); i++)
   {
-    treeMCTrk3->GetEntry(i);
+    treeDataTrk3->GetEntry(i);
 
-    TLeaf *slpTX = treeMCTrk3->GetLeaf("SlpTX");
-    TLeaf *slpTY = treeMCTrk3->GetLeaf("SlpTY");
-    TLeaf *slpT2 = treeMCTrk3->GetLeaf("SlpT2");
-    TLeaf *IP = treeMCTrk3->GetLeaf("ImpactPar");
+    TLeaf *slpTX = treeDataTrk3->GetLeaf("SlpTX");
+    TLeaf *slpTY = treeDataTrk3->GetLeaf("SlpTY");
+    TLeaf *slpT2 = treeDataTrk3->GetLeaf("SlpT2");
+    TLeaf *beamTX = treeDataTrk3->GetLeaf("BeamTX");
+    TLeaf *beamTY = treeDataTrk3->GetLeaf("BeamTY");
+    TLeaf *IP = treeDataTrk3->GetLeaf("ImpactPar");
 
-    SlpTXHist3->Fill(slpTX->GetValue());
-    SlpTYHist3->Fill(slpTY->GetValue());
-    SlpT2Hist3->Fill(slpT2->GetValue());
-    IPMC3->Fill(IP->GetValue());
+    double TX = slpTX->GetValue() - beamTX->GetValue();
+    double TY = slpTY->GetValue() - beamTY->GetValue();
+
+    SlpTXHist3->Fill(TX);
+    SlpTYHist3->Fill(TY);
+    //SlpT2Hist3->Fill(slpT2->GetValue());
+    SlpT2Hist3->Fill(sqrt(TX*TX+TY*TY));
+    IPData3->Fill(IP->GetValue());
   }
 
-  for (int i = 0; i < MC1VtxSize; i++)
+  for (int i = 0; i < Data1VtxSize; i++)
   {
-    treeMCVtx1->GetEntry(i);
+    treeDataVtx1->GetEntry(i);
+    treeDataVtxRaw1->GetEntry(i);
 
-    TLeaf *mult = treeMCVtx1->GetLeaf("Multip");
+    TLeaf *mult = treeDataVtx1->GetLeaf("Multip");
+    TLeaf *VX = treeDataVtxRaw1->GetLeaf("vx");
+    TLeaf *VY = treeDataVtxRaw1->GetLeaf("vy");
+    TLeaf *VZ = treeDataVtxRaw1->GetLeaf("vz");
 
     Mult1->Fill(mult->GetValue());
+    VX1->Fill(VX->GetValue());
+    VY1->Fill(VY->GetValue());
+    VZ1->Fill(VZ->GetValue());
+
+    //VXY1->Fill(VX->GetValue(), VY->GetValue());
   }
 
-  for (int i = 0; i < MC2VtxSize; i++)
+  for (int i = 0; i < Data2VtxSize; i++)
   {
-    treeMCVtx2->GetEntry(i);
+    treeDataVtx2->GetEntry(i);
+    treeDataVtxRaw2->GetEntry(i);
 
-    TLeaf *mult = treeMCVtx2->GetLeaf("Multip");
+    TLeaf *mult = treeDataVtx2->GetLeaf("Multip");
+    TLeaf *VX = treeDataVtxRaw2->GetLeaf("vx");
+    TLeaf *VY = treeDataVtxRaw2->GetLeaf("vy");
+    TLeaf *VZ = treeDataVtxRaw2->GetLeaf("vz");
 
     Mult2->Fill(mult->GetValue());
+    VX2->Fill(VX->GetValue());
+    VY2->Fill(VY->GetValue());
+    VZ2->Fill(VZ->GetValue());
+
+    //VXY2->Fill(VX->GetValue(), VY->GetValue());
+    
   }
 
-  for (int i = 0; i < MC3VtxSize; i++)
+  for (int i = 0; i < Data3VtxSize; i++)
   {
-    treeMCVtx3->GetEntry(i);
+    treeDataVtx3->GetEntry(i);
+    treeDataVtxRaw3->GetEntry(i);
 
-    TLeaf *mult = treeMCVtx3->GetLeaf("Multip");
+    TLeaf *mult = treeDataVtx3->GetLeaf("Multip");
+    TLeaf *VX = treeDataVtxRaw3->GetLeaf("vx");
+    TLeaf *VY = treeDataVtxRaw3->GetLeaf("vy");
+    TLeaf *VZ = treeDataVtxRaw3->GetLeaf("vz");
 
     Mult3->Fill(mult->GetValue());
+    VX3->Fill(VX->GetValue());
+    VY3->Fill(VY->GetValue());
+    VZ3->Fill(VZ->GetValue());
+    
+    //VXY3->Fill(VX->GetValue(), VY->GetValue());
   }
 
   
-  SlpTXHist2->Scale(MC1VtxSize/MC2VtxSize);
-  SlpTXHist3->Scale(MC1VtxSize/MC3VtxSize);
+  SlpTXHist2->Scale(Data1VtxSize/Data2VtxSize);
+  SlpTXHist3->Scale(Data1VtxSize/Data3VtxSize);
 
-  SlpTYHist2->Scale(MC1VtxSize/MC2VtxSize);
-  SlpTYHist3->Scale(MC1VtxSize/MC3VtxSize);
+  SlpTYHist2->Scale(Data1VtxSize/Data2VtxSize);
+  SlpTYHist3->Scale(Data1VtxSize/Data3VtxSize);
 
-  SlpT2Hist2->Scale(MC1VtxSize/MC2VtxSize);
-  SlpT2Hist3->Scale(MC1VtxSize/MC3VtxSize);
+  SlpT2Hist2->Scale(Data1VtxSize/Data2VtxSize);
+  SlpT2Hist3->Scale(Data1VtxSize/Data3VtxSize);
 
-  IPMC2->Scale(MC1VtxSize/MC2VtxSize);
-  IPMC3->Scale(MC1VtxSize/MC3VtxSize);
+  IPData2->Scale(Data1VtxSize/Data2VtxSize);
+  IPData3->Scale(Data1VtxSize/Data3VtxSize);
 
-  Mult2->Scale(MC1VtxSize/MC2VtxSize);
-  Mult3->Scale(MC1VtxSize/MC3VtxSize);
+  Mult2->Scale(Data1VtxSize/Data2VtxSize);
+  Mult3->Scale(Data1VtxSize/Data3VtxSize);
 
-  SlpTXHist1->GetYaxis()->SetRangeUser(0, 200000);
+  VX2->Scale(Data1VtxSize/Data2VtxSize);
+  VX3->Scale(Data1VtxSize/Data3VtxSize);
+
+  VY2->Scale(Data1VtxSize/Data2VtxSize);
+  VY3->Scale(Data1VtxSize/Data3VtxSize);
+
+  VZ2->Scale(Data1VtxSize/Data2VtxSize);
+  VZ3->Scale(Data1VtxSize/Data3VtxSize);
+
+  SlpTXHist1->GetYaxis()->SetRangeUser(0, 200000); 
   
-  SlpTXHist1->Draw("HIST E1"); SlpTXHist1->SetLineColor(kRed);
-  SlpTXHist2->Draw("SAME HIST"); SlpTXHist2->SetLineColor(kBlue);
-  SlpTXHist3->Draw("SAME HIST"); SlpTXHist3->SetLineColor(kOrange);
-  
-  TLegend *legend; 
+  SlpTXHist1->Draw("HIST"); SlpTXHist1->SetLineColor(kRed); SlpTXHist1->SetLineStyle(kDotted); SlpTXHist1->SetLineWidth(2);
 
-  legend = new TLegend(0.1, 0.8, 0.32, 0.9);
-  legend->SetHeader("Histogram Legend","C");
-  legend->AddEntry(SlpTXHist1,"MC1","f");
-  legend->AddEntry(SlpTXHist2,"MC2","f");
-  legend->AddEntry(SlpTXHist3,"MC3","f");
-  legend->Draw();
+  Canvas->Modified(); Canvas->Update();
+  TPaveStats *statBoxSlpTX1 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxSlpTX1->SetName("SlpTXHist1");
+  statBoxSlpTX1->SetY1NDC(0.9);
+  statBoxSlpTX1->SetY2NDC(0.7);
+  statBoxSlpTX1->SetTextColor(kRed);
+  statBoxSlpTX1->Draw();
 
-  Canvas->Print( "MCCompHist.pdf(", "pdf");
+  SlpTXHist2->Draw("SAMES HIST"); SlpTXHist2->SetLineColor(kBlue); SlpTXHist2->SetLineStyle(2); SlpTXHist2->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxSlpTX2 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxSlpTX2->SetName("SlpTXHist2");
+  statBoxSlpTX2->SetY1NDC(0.6);
+  statBoxSlpTX2->SetY2NDC(0.4);
+  statBoxSlpTX2->SetTextColor(kBlue);
+  statBoxSlpTX2->Draw();
+
+  SlpTXHist3->Draw("SAMES HIST"); SlpTXHist3->SetLineColor(kBlack); SlpTXHist3->SetLineStyle(1); SlpTXHist3->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxSlpTX3 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxSlpTX3->SetName("SlpTXHist3");
+  statBoxSlpTX3->SetY1NDC(0.3);
+  statBoxSlpTX3->SetY2NDC(0.1);
+  statBoxSlpTX3->SetTextColor(kBlack);
+  statBoxSlpTX3->Draw();
+
+  TLegend *legendTX = new TLegend(0.1, 0.8, 0.32, 0.9);
+  legendTX->SetHeader("Histogram Legend","C");
+  legendTX->AddEntry(SlpTXHist1,"Data1","f");
+  legendTX->AddEntry(SlpTXHist2,"Data2","f");
+  legendTX->AddEntry(SlpTXHist3,"Data3","f");
+  legendTX->Draw();
+
+  Canvas->Print( "DataCompHist.pdf(", "pdf");
 
   SlpTYHist1->GetYaxis()->SetRangeUser(0, 200000);
 
-  SlpTYHist1->Draw("HIST E1"); SlpTYHist1->SetLineColor(kRed);
-  SlpTYHist2->Draw("SAME HIST"); SlpTYHist2->SetLineColor(kBlue);
-  SlpTYHist3->Draw("SAME HIST"); SlpTYHist3->SetLineColor(kOrange);
-  
-  legend = new TLegend(0.1, 0.8, 0.32, 0.9);
-  legend->SetHeader("Histogram Legend","C");
-  legend->AddEntry(SlpTYHist1,"MC1","f");
-  legend->AddEntry(SlpTYHist2,"MC2","f");
-  legend->AddEntry(SlpTYHist3,"MC3","f");
-  legend->Draw();
+  SlpTYHist1->Draw("HIST"); SlpTYHist1->SetLineColor(kRed); SlpTYHist1->SetLineStyle(kDotted); SlpTYHist1->SetLineWidth(2);
 
-  Canvas->Print( "MCCompHist.pdf", "pdf");
+  Canvas->Modified(); Canvas->Update();
+  TPaveStats *statBoxSlpTY1 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxSlpTY1->SetName("SlpTYHist1");
+  statBoxSlpTY1->SetY1NDC(0.9);
+  statBoxSlpTY1->SetY2NDC(0.7);
+  statBoxSlpTY1->SetTextColor(kRed);
+  statBoxSlpTY1->Draw();
+
+  SlpTYHist2->Draw("SAMES HIST"); SlpTYHist2->SetLineColor(kBlue); SlpTYHist2->SetLineStyle(2); SlpTYHist2->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxSlpTY2 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxSlpTY2->SetName("SlpTYHist2");
+  statBoxSlpTY2->SetY1NDC(0.6);
+  statBoxSlpTY2->SetY2NDC(0.4);
+  statBoxSlpTY2->SetTextColor(kBlue);
+  statBoxSlpTY2->Draw();
+
+  SlpTYHist3->Draw("SAMES HIST"); SlpTYHist3->SetLineColor(kBlack); SlpTYHist3->SetLineStyle(1); SlpTYHist3->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxSlpTY3 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxSlpTY3->SetName("SlpTYHist3");
+  statBoxSlpTY3->SetY1NDC(0.3);
+  statBoxSlpTY3->SetY2NDC(0.1);
+  statBoxSlpTY3->SetTextColor(kBlack);
+  statBoxSlpTY3->Draw();
+  
+  TLegend *legendTY = new TLegend(0.1, 0.8, 0.32, 0.9);
+  legendTY->SetHeader("Histogram Legend","C");
+  legendTY->AddEntry(SlpTYHist1,"Data1","f");
+  legendTY->AddEntry(SlpTYHist2,"Data2","f");
+  legendTY->AddEntry(SlpTYHist3,"Data3","f");
+  legendTY->Draw();
+
+  Canvas->Print( "DataCompHist.pdf", "pdf");
 
   SlpT2Hist1->GetYaxis()->SetRangeUser(0, 150000);
-
-  SlpT2Hist1->Draw("HIST E1"); SlpT2Hist1->SetLineColor(kRed);
-  SlpT2Hist2->Draw("SAME HIST"); SlpT2Hist2->SetLineColor(kBlue);
-  SlpT2Hist3->Draw("SAME HIST"); SlpT2Hist3->SetLineColor(kOrange);
   
-  legend = new TLegend(0.1, 0.8, 0.32, 0.9);
-  legend->SetHeader("Histogram Legend","C");
-  legend->AddEntry(SlpT2Hist1,"MC1","f");
-  legend->AddEntry(SlpT2Hist2,"MC2","f");
-  legend->AddEntry(SlpT2Hist3,"MC3","f");
-  legend->Draw();
+  SlpT2Hist1->Draw("HIST"); SlpT2Hist1->SetLineColor(kRed); SlpT2Hist1->SetLineStyle(kDotted); SlpT2Hist1->SetLineWidth(2);
 
-  Canvas->Print( "MCCompHist.pdf", "pdf");
+  Canvas->Modified(); Canvas->Update();
+  TPaveStats *statBoxSlpT21 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxSlpT21->SetName("SlpT2Hist1");
+  statBoxSlpT21->SetY1NDC(0.9);
+  statBoxSlpT21->SetY2NDC(0.7);
+  statBoxSlpT21->SetTextColor(kRed);
+  statBoxSlpT21->Draw();
 
-  IPMC1->GetYaxis()->SetRangeUser(0, 450000);
+  SlpT2Hist2->Draw("SAMES HIST"); SlpT2Hist2->SetLineColor(kBlue); SlpT2Hist2->SetLineStyle(2); SlpT2Hist2->SetLineWidth(2);
 
-  IPMC1->Draw("HIST E1"); IPMC1->SetLineColor(kRed);
-  IPMC2->Draw("SAME HIST"); IPMC2->SetLineColor(kBlue);
-  IPMC3->Draw("SAME HIST"); IPMC3->SetLineColor(kOrange);
+  Canvas->Update();
+  TPaveStats *statBoxSlpT22 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxSlpT22->SetName("SlpT2Hist2");
+  statBoxSlpT22->SetY1NDC(0.6);
+  statBoxSlpT22->SetY2NDC(0.4);
+  statBoxSlpT22->SetTextColor(kBlue);
+  statBoxSlpT22->Draw();
+
+  SlpT2Hist3->Draw("SAMES HIST"); SlpT2Hist3->SetLineColor(kBlack); SlpT2Hist3->SetLineStyle(1); SlpT2Hist3->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxSlpT23 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxSlpT23->SetName("SlpT2Hist3");
+  statBoxSlpT23->SetY1NDC(0.3);
+  statBoxSlpT23->SetY2NDC(0.1);
+  statBoxSlpT23->SetTextColor(kBlack);
+  statBoxSlpT23->Draw();
+
+  TLegend *legendT2 = new TLegend(0.1, 0.8, 0.32, 0.9);
+  legendT2->SetHeader("Histogram Legend","C");
+  legendT2->AddEntry(SlpT2Hist1,"Data1","f");
+  legendT2->AddEntry(SlpT2Hist2,"Data2","f");
+  legendT2->AddEntry(SlpT2Hist3,"Data3","f");
+  legendT2->Draw();
+
+  Canvas->Print( "DataCompHist.pdf", "pdf");
+
+  IPData1->GetYaxis()->SetRangeUser(0, 450000);
+
+  IPData1->Draw("HIST"); IPData1->SetLineColor(kRed); IPData1->SetLineStyle(kDotted); IPData1->SetLineWidth(2);
+
+  Canvas->Modified(); Canvas->Update();
+  TPaveStats *statBoxIP1 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxIP1->SetName("IPData1");
+  statBoxIP1->SetY1NDC(0.9);
+  statBoxIP1->SetY2NDC(0.7);
+  statBoxIP1->SetTextColor(kRed);
+  statBoxIP1->Draw();
+
+  IPData2->Draw("SAMES HIST"); IPData2->SetLineColor(kBlue); IPData2->SetLineStyle(2); IPData2->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxIP2 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxIP2->SetName("IPData2");
+  statBoxIP2->SetY1NDC(0.6);
+  statBoxIP2->SetY2NDC(0.4);
+  statBoxIP2->SetTextColor(kBlue);
+  statBoxIP2->Draw();
+
+  IPData3->Draw("SAMES HIST"); IPData3->SetLineColor(kBlack); IPData3->SetLineStyle(1); IPData3->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxIP3 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxIP3->SetName("IPData3");
+  statBoxIP3->SetY1NDC(0.3);
+  statBoxIP3->SetY2NDC(0.1);
+  statBoxIP3->SetTextColor(kBlack);
+  statBoxIP3->Draw();
   
-  legend = new TLegend(0.1, 0.8, 0.32, 0.9);
-  legend->SetHeader("Histogram Legend","C");
-  legend->AddEntry(IPMC1,"MC1","f");
-  legend->AddEntry(IPMC2,"MC2","f");
-  legend->AddEntry(IPMC3,"MC3","f");
-  legend->Draw();
+  TLegend *legendIP = new TLegend(0.1, 0.8, 0.32, 0.9);
+  legendIP->SetHeader("Histogram Legend","C");
+  legendIP->AddEntry(IPData1,"Data1","f");
+  legendIP->AddEntry(IPData2,"Data2","f");
+  legendIP->AddEntry(IPData3,"Data3","f");
+  legendIP->Draw();
 
-  Canvas->Print( "MCCompHist.pdf", "pdf");
+  Canvas->Print( "DataCompHist.pdf", "pdf");
 
   Mult1->GetYaxis()->SetRangeUser(0, 5000);
 
-  Mult1->Draw("HIST E1"); Mult1->SetLineColor(kRed);
-  Mult2->Draw("SAME HIST"); Mult2->SetLineColor(kBlue);
-  Mult3->Draw("SAME HIST"); Mult3->SetLineColor(kOrange);
-  
-  legend = new TLegend(0.1, 0.8, 0.32, 0.9);
-  legend->SetHeader("Histogram Legend","C");
-  legend->AddEntry(Mult1,"MC1","f");
-  legend->AddEntry(Mult2,"MC2","f");
-  legend->AddEntry(Mult3,"MC3","f");
-  legend->Draw();
+  Mult1->Draw("HIST"); Mult1->SetLineColor(kRed); Mult1->SetLineStyle(kDotted); Mult1->SetLineWidth(2);
 
-  Canvas->Print( "MCCompHist.pdf)", "pdf");
+  Canvas->Modified(); Canvas->Update();
+  TPaveStats *statBoxMult1 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxMult1->SetName("Mult1");
+  statBoxMult1->SetY1NDC(0.9);
+  statBoxMult1->SetY2NDC(0.7);
+  statBoxMult1->SetTextColor(kRed);
+  statBoxMult1->Draw();
+
+  Mult2->Draw("SAMES HIST"); Mult2->SetLineColor(kBlue); Mult2->SetLineStyle(2); Mult2->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxMult2 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxMult2->SetName("Mult2");
+  statBoxMult2->SetY1NDC(0.6);
+  statBoxMult2->SetY2NDC(0.4);
+  statBoxMult2->SetTextColor(kBlue);
+  statBoxMult2->Draw();
+
+  Mult3->Draw("SAMES HIST"); Mult3->SetLineColor(kBlack); Mult3->SetLineStyle(1); Mult3->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxMult3 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxMult3->SetName("Mult3");
+  statBoxMult3->SetY1NDC(0.3);
+  statBoxMult3->SetY2NDC(0.1);
+  statBoxMult3->SetTextColor(kBlack);
+  statBoxMult3->Draw();
+  
+  TLegend *legendMl = new TLegend(0.1, 0.8, 0.32, 0.9);
+  legendMl->SetHeader("Histogram Legend","C");
+  legendMl->AddEntry(Mult1,"Data1","f");
+  legendMl->AddEntry(Mult2,"Data2","f");
+  legendMl->AddEntry(Mult3,"Data3","f");
+  legendMl->Draw();
+
+  Canvas->Print( "DataCompHist.pdf", "pdf");
+
+  VX1->GetYaxis()->SetRangeUser(0, 900);
+
+  VX1->Draw("HIST"); VX1->SetLineColor(kRed); VX1->SetLineStyle(kDotted); VX1->SetLineWidth(2);
+
+  Canvas->Modified(); Canvas->Update();
+  TPaveStats *statBoxVX1 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxVX1->SetName("VX1");
+  statBoxVX1->SetY1NDC(0.9);
+  statBoxVX1->SetY2NDC(0.7);
+  statBoxVX1->SetTextColor(kRed);
+  statBoxVX1->Draw();
+
+  VX2->Draw("SAMES HIST"); VX2->SetLineColor(kBlue); VX2->SetLineStyle(2); VX2->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxVX2 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxVX2->SetName("VX2");
+  statBoxVX2->SetY1NDC(0.6);
+  statBoxVX2->SetY2NDC(0.4);
+  statBoxVX2->SetTextColor(kBlue);
+  statBoxVX2->Draw();
+
+  VX3->Draw("SAMES HIST"); VX3->SetLineColor(kBlack); VX3->SetLineStyle(1); VX3->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxVX3 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxVX3->SetName("VX3");
+  statBoxVX3->SetY1NDC(0.3);
+  statBoxVX3->SetY2NDC(0.1);
+  statBoxVX3->SetTextColor(kBlack);
+  statBoxVX3->Draw();
+  
+  TLegend *legendVX = new TLegend(0.1, 0.8, 0.32, 0.9);
+  legendVX->SetHeader("Histogram Legend","C");
+  legendVX->AddEntry(VX1,"Data1","f");
+  legendVX->AddEntry(VX2,"Data2","f");
+  legendVX->AddEntry(VX3,"Data3","f");
+  legendVX->Draw();
+
+  Canvas->Print( "DataCompHist.pdf", "pdf");
+
+  VY1->GetYaxis()->SetRangeUser(0, 900);
+
+  VY1->Draw("HIST"); VY1->SetLineColor(kRed); VY1->SetLineStyle(kDotted); VY1->SetLineWidth(2);
+
+  Canvas->Modified(); Canvas->Update();
+  TPaveStats *statBoxVY1 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxVY1->SetName("VY1");
+  statBoxVY1->SetY1NDC(0.9);
+  statBoxVY1->SetY2NDC(0.7);
+  statBoxVY1->SetTextColor(kRed);
+  statBoxVY1->Draw();
+
+  VY2->Draw("SAMES HIST"); VY2->SetLineColor(kBlue); VY2->SetLineStyle(2); VY2->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxVY2 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxVY2->SetName("VY2");
+  statBoxVY2->SetY1NDC(0.6);
+  statBoxVY2->SetY2NDC(0.4);
+  statBoxVY2->SetTextColor(kBlue);
+  statBoxVY2->Draw();
+
+  VY3->Draw("SAMES HIST"); VY3->SetLineColor(kBlack); VY3->SetLineStyle(1); VY3->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxVY3 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxVY3->SetName("VY3");
+  statBoxVY3->SetY1NDC(0.3);
+  statBoxVY3->SetY2NDC(0.1);
+  statBoxVY3->SetTextColor(kBlack);
+  statBoxVY3->Draw();
+  
+  TLegend *legendVY = new TLegend(0.1, 0.8, 0.32, 0.9);
+  legendVY->SetHeader("Histogram Legend","C");
+  legendVY->AddEntry(VY1,"Data1","f");
+  legendVY->AddEntry(VY2,"Data2","f");
+  legendVY->AddEntry(VY3,"Data3","f");
+  legendVY->Draw();
+
+  Canvas->Print( "DataCompHist.pdf", "pdf");
+
+  VZ1->GetYaxis()->SetRangeUser(0, 5000);
+
+  VZ1->Draw("HIST"); VZ1->SetLineColor(kRed); VZ1->SetLineStyle(kDotted); VZ1->SetLineWidth(2);
+
+  Canvas->Modified(); Canvas->Update();
+  TPaveStats *statBoxVZ1 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxVZ1->SetName("VZ1");
+  statBoxVZ1->SetY1NDC(0.9);
+  statBoxVZ1->SetY2NDC(0.7);
+  statBoxVZ1->SetTextColor(kRed);
+  statBoxVZ1->Draw();
+
+  VZ2->Draw("SAMES HIST"); VZ2->SetLineColor(kBlue); VZ2->SetLineStyle(2); VZ2->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxVZ2 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxVZ2->SetName("VZ2");
+  statBoxVZ2->SetY1NDC(0.6);
+  statBoxVZ2->SetY2NDC(0.4);
+  statBoxVZ2->SetTextColor(kBlue);
+  statBoxVZ2->Draw();
+
+  VZ3->Draw("SAMES HIST"); VZ3->SetLineColor(kBlack); VZ3->SetLineStyle(1); VZ3->SetLineWidth(2);
+
+  Canvas->Update();
+  TPaveStats *statBoxVZ3 = (TPaveStats*)Canvas->GetPrimitive("stats");
+  statBoxVZ3->SetName("VZ3");
+  statBoxVZ3->SetY1NDC(0.3);
+  statBoxVZ3->SetY2NDC(0.1);
+  statBoxVZ3->SetTextColor(kBlack);
+  statBoxVZ3->Draw();
+  
+  TLegend *legendVZ = new TLegend(0.1, 0.8, 0.32, 0.9);
+  legendVZ->SetHeader("Histogram Legend","C");
+  legendVZ->AddEntry(VZ1,"Data1","f");
+  legendVZ->AddEntry(VZ2,"Data2","f");
+  legendVZ->AddEntry(VZ3,"Data3","f");
+  legendVZ->Draw();
+
+  /*
+  Canvas->Print( "DataCompHist.pdf", "pdf");
+
+  VXY1->SetXTitle("vx");
+  VXY1->SetYTitle("vy");
+  VXY1->SetFillColor(5);
+  VXY1->Draw("coltz");
+
+  Canvas->Print( "DataCompHist.pdf", "pdf");
+
+  VXY2->SetXTitle("vx");
+  VXY2->SetYTitle("vy");
+  VXY2->SetFillColor(5);
+  VXY2->Draw("coltz");
+
+  Canvas->Print( "DataCompHist.pdf", "pdf");
+
+  VXY3->SetXTitle("vx");
+  VXY3->SetYTitle("vy");
+  VXY3->SetFillColor(5);
+  VXY3->Draw("coltz");
+  */
+  Canvas->Print( "DataCompHist.pdf)", "pdf");
 }
